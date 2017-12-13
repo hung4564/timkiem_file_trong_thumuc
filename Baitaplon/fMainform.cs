@@ -13,8 +13,7 @@ namespace Baitaplon
     public partial class fMainform : Form
     {
         private const int ItemHeight = 50;
-        string pathfile_history_name = Application.StartupPath + "\\history_name.txt";
-        string pathfile_history_file = Application.StartupPath + "\\history_file.txt";
+        
         public fMainform()
         {
             InitializeComponent();
@@ -45,7 +44,7 @@ namespace Baitaplon
         }
         void loadLichsuTen()
         {
-            string[] result = XTxt.ReadLineText(pathfile_history_name).ToArray();
+            string[] result = XTxt.ReadLineText(XPath.pathfile_history_name).ToArray();
             foreach (string item in result)
             {
                 listBox_tu.Items.Add(item);
@@ -53,7 +52,7 @@ namespace Baitaplon
         }
         void loadLichsuFile()
         {
-            string[] result = XTxt.ReadLineText(pathfile_history_file).ToArray();
+            string[] result = XTxt.ReadLineText(XPath.pathfile_history_file).ToArray();
             foreach (string item in result)
             {
                 XInfo temp = new XInfo(item);

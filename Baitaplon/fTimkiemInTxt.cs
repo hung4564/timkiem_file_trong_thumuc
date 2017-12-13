@@ -48,6 +48,7 @@ namespace Baitaplon
             {
                 progressBar1.Value = progressBar1.Minimum;
                 btnSearch.Text = "Stop";
+                XTxt.WriteFirstLine(XPath.pathfile_history_name,timkiem);
                 listBox_timkiem.Items.Clear();
                 backgroundWorker1.RunWorkerAsync();
             }
@@ -135,6 +136,7 @@ namespace Baitaplon
             Loaifile a = rd_word.Checked ? Loaifile.Word : Loaifile.Txt;
             if (list.SelectedItem != null)
             {
+                XTxt.WriteFirstLine(XPath.pathfile_history_file,list.SelectedItem.ToString());
                 fOpenText f = new fOpenText(list.SelectedItem.ToString(),timkiem, a);
                 f.Show();
             }

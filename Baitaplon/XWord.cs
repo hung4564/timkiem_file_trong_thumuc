@@ -29,7 +29,6 @@ namespace Baitaplon
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
         public static ProgressBar progressBar1;
-        public static string pathfilerft = Application.StartupPath+"\\temp.rtf";
         //đọc file trả về nôi dung file dạng rtf
         public static string ReadWord(string path)
         {
@@ -39,7 +38,7 @@ namespace Baitaplon
             {
                 f.Show();
                 DocToRtf(path);
-                using (StreamReader rd = new StreamReader(pathfilerft))
+                using (StreamReader rd = new StreamReader(XPath.pathfilerft))
                 {
                     if (docfile != null)
                         docfile(null, EventArgs.Empty);
@@ -105,7 +104,7 @@ namespace Baitaplon
                     //lấy địa chỉ file word
                     object Source = filePath;   
                     //địa chỉ file rtf tạo ra tạm
-                    object Target = pathfilerft;
+                    object Target = XPath.pathfilerft;
                     //nếu file tồn tại thì xóa đi
                     if (File.Exists(Target.ToString()))
                     {

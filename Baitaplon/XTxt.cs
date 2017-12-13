@@ -35,6 +35,7 @@ namespace Baitaplon
                 }
             }
         }
+
         //đọc file txt tra về nội dung file
         public static string ReadText(string path)
         {
@@ -65,6 +66,7 @@ namespace Baitaplon
                 list.EndUpdate();
             }));
         }
+
         //đọc từng dòng của txt
         public static IEnumerable<string> ReadLineText(string path)
         {
@@ -79,6 +81,21 @@ namespace Baitaplon
                 }
             }
         }
+
+        //Ghi từng dòng vào file
+        public static void WriteFirstLine(string filename, string writetex)
+        {
+            string tempfile = Path.GetTempFileName();
+            using (var writer = new StreamWriter(tempfile))
+            using (var reader = new StreamReader(filename))
+            {
+                writer.WriteLine(writetex);
+                while (!reader.EndOfStream)
+                    writer.WriteLine(reader.ReadLine());
+            }
+            File.Copy(tempfile, filename, true);
+        }
+
         //tìm kiếm từ trong file, nó trả về dòng chứa từ đó       
         public static string SearchTextInFile(string path, string keyword)
         {

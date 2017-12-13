@@ -4,11 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Baitaplon
 {
     public static class XPath
     {
+        public static string pathfile_history_name = Application.StartupPath + "\\history_name.txt";
+        public static string pathfile_history_file = Application.StartupPath + "\\history_file.txt";
+        public static string pathfilerft = Application.StartupPath + "\\temp.rtf";
         #region Các phương thức
         public static string GetFileNameWithoutExtension(string path)  //Tên file mà không có phần mở rộng
         {
