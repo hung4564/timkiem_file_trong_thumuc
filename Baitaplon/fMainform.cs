@@ -13,7 +13,7 @@ namespace Baitaplon
     public partial class fMainform : Form
     {
         private const int ItemHeight = 50;
-        
+
         public fMainform()
         {
             InitializeComponent();
@@ -45,19 +45,23 @@ namespace Baitaplon
         void loadLichsuTen()
         {
             string[] result = XTxt.ReadLineText(XPath.pathfile_history_name).ToArray();
-            foreach (string item in result)
-            {
-                listBox_tu.Items.Add(item);
-            }
+            if (result.Count() == 0) listBox_tu.Items.Add("Không có từ tìm kiếm gần đây");
+            else
+                foreach (string item in result)
+                {
+                    listBox_tu.Items.Add(item);
+                }
         }
         void loadLichsuFile()
         {
             string[] result = XTxt.ReadLineText(XPath.pathfile_history_file).ToArray();
-            foreach (string item in result)
-            {
-                XInfo temp = new XInfo(item);
-                listBox_file.Items.Add(temp);
-            }
+            if (result.Count() == 0) listBox_tu.Items.Add("Không có file mở gần đây");
+            else
+                foreach (string item in result)
+                {
+                    XInfo temp = new XInfo(item);
+                    listBox_file.Items.Add(temp);
+                }
         }
         private void button1_Click(object sender, EventArgs e)
         {
