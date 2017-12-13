@@ -54,6 +54,12 @@
     <Compile Include="fBoloc.Designer.cs">
       <DependentUpon>fBoloc.cs</DependentUpon>
     </Compile>
+    <Compile Include="fThongbao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fThongbao.Designer.cs">
+      <DependentUpon>fThongbao.cs</DependentUpon>
+    </Compile>
     <Compile Include="fTimkiemInTxt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fOpenText.resx">
       <DependentUpon>fOpenText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fThongbao.resx">
+      <DependentUpon>fThongbao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fTimkiemInTxt.resx">
       <DependentUpon>fTimkiemInTxt.cs</DependentUpon>

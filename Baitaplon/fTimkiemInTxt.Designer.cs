@@ -222,6 +222,7 @@
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.button1);
             this.Name = "fTimkiemInTxt";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fTimkiemText";
             this.ResumeLayout(false);
             this.PerformLayout();

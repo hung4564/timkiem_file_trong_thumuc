@@ -31,7 +31,7 @@ namespace Baitaplon
                 string lineresult = SearchTextInFile(path[i], keyword);
                 if (lineresult != null)
                 {
-                    AddFileToListBox(path[i],lineresult);
+                    AddFileToListBox(path[i], lineresult);
                 }
             }
         }
@@ -48,13 +48,13 @@ namespace Baitaplon
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Mở file lỗi:\n"+ex.Message);
+                MessageBox.Show("Mở file lỗi:\n" + ex.Message);
                 return "Không đọc được file";
             }
-            
+
         }
 
-        static void AddFileToListBox(string path,string lineresult)
+        static void AddFileToListBox(string path, string lineresult)
         {
             XTextInfo listitem = new XTextInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path, lineresult);
 
@@ -65,7 +65,21 @@ namespace Baitaplon
                 list.EndUpdate();
             }));
         }
-        //tìm kiếm từ trong file, nó trả về dòng chứa từ đó
+        //đọc từng dòng của txt
+        public static IEnumerable<string> ReadLineText(string path)
+        {
+            FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
+            using (var sr = new StreamReader(inFile))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine();
+                    if (String.IsNullOrEmpty(line)) continue;
+                    yield return line;
+                }
+            }
+        }
+        //tìm kiếm từ trong file, nó trả về dòng chứa từ đó       
         public static string SearchTextInFile(string path, string keyword)
         {
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);

@@ -12,7 +12,12 @@ namespace Baitaplon
         public Image Picture;
         public string Name;
         public string Path;
-        
+        public XInfo(string path)
+        {
+            Picture = XImage.LoadImagebyExt(path);
+            Name = XPath.GetFileNameWithoutExtension(path);
+            this.Path = path;
+        }
         public XInfo(Image picture, string name, string path)
         {
             Picture = picture;

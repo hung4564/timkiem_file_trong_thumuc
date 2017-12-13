@@ -14,7 +14,7 @@ namespace Baitaplon
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new fOpenText());
+            Application.Run(new fMainform());
         }
     }
 }

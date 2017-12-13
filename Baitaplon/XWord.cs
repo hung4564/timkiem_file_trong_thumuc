@@ -13,6 +13,18 @@ namespace Baitaplon
 {
     class XWord
     {
+        private static event EventHandler chuyendoiRTF;
+        public static event EventHandler ConventRTF
+        {
+            add { chuyendoiRTF += value; }
+            remove { chuyendoiRTF -= value; }
+        }
+        private static event EventHandler docfile;
+        public static event EventHandler Docfile
+        {
+            add { docfile += value; }
+            remove { docfile -= value; }
+        }
         public static ListBox list;
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
@@ -21,21 +33,30 @@ namespace Baitaplon
         //đọc file trả về nôi dung file dạng rtf
         public static string ReadWord(string path)
         {
+            fThongbao f = new fThongbao();
+            string read;
             try
             {
+                f.Show();
                 DocToRtf(path);
                 using (StreamReader rd = new StreamReader(pathfilerft))
                 {
-                    string read = rd.ReadToEnd();
-                    return read;
+                    if (docfile != null)
+                        docfile(null, EventArgs.Empty);
+                    read = rd.ReadToEnd();
                 }
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Readword");
-                return "Không đọc được";
+                read = "Không đọc được";
             }
-
+            finally
+            {
+                f.Close();
+            }
+            return read;
         }
         // tìm kiếm từ trong tất cả file word có trong thư mục root
         public static void SearchALL(string root, string keyword)
@@ -71,6 +92,10 @@ namespace Baitaplon
         private static void DocToRtf(string filePath)
         {
             //Creating the instance of Word Application
+            if(chuyendoiRTF!=null)
+            {
+                chuyendoiRTF(null, EventArgs.Empty);
+            }
             Microsoft.Office.Interop.Word.Application newApp = new Microsoft.Office.Interop.Word.Application();
             object Unknown = Type.Missing;
             if (XPath.GetExtention(filePath) == ".doc" || XPath.GetExtention(filePath) == ".docx")
