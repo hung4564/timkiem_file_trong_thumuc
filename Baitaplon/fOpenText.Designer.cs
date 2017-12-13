@@ -30,6 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +38,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn_boidam = new System.Windows.Forms.Button();
             this.btn_reset = new System.Windows.Forms.Button();
+            this.open = new System.Windows.Forms.OpenFileDialog();
+            this.btn_next = new System.Windows.Forms.Button();
+            this.btn_last = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,9 +59,18 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "FIle";
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.openFileToolStripMenuItem.Text = "Open file";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -92,6 +105,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "Viết";
             // 
             // btn_boidam
             // 
@@ -113,11 +127,37 @@
             this.btn_reset.UseVisualStyleBackColor = true;
             this.btn_reset.Click += new System.EventHandler(this.button3_Click);
             // 
+            // open
+            // 
+            this.open.FileName = "open";
+            // 
+            // btn_next
+            // 
+            this.btn_next.Location = new System.Drawing.Point(575, 77);
+            this.btn_next.Name = "btn_next";
+            this.btn_next.Size = new System.Drawing.Size(75, 23);
+            this.btn_next.TabIndex = 6;
+            this.btn_next.Text = "Next";
+            this.btn_next.UseVisualStyleBackColor = true;
+            this.btn_next.Click += new System.EventHandler(this.btn_next_Click);
+            // 
+            // btn_last
+            // 
+            this.btn_last.Location = new System.Drawing.Point(575, 106);
+            this.btn_last.Name = "btn_last";
+            this.btn_last.Size = new System.Drawing.Size(75, 23);
+            this.btn_last.TabIndex = 7;
+            this.btn_last.Text = "Last";
+            this.btn_last.UseVisualStyleBackColor = true;
+            this.btn_last.Click += new System.EventHandler(this.btn_last_Click);
+            // 
             // fOpenText
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 361);
+            this.Controls.Add(this.btn_last);
+            this.Controls.Add(this.btn_next);
             this.Controls.Add(this.btn_reset);
             this.Controls.Add(this.btn_boidam);
             this.Controls.Add(this.textBox1);
@@ -144,5 +184,9 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn_boidam;
         private System.Windows.Forms.Button btn_reset;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog open;
+        private System.Windows.Forms.Button btn_next;
+        private System.Windows.Forms.Button btn_last;
     }
 }

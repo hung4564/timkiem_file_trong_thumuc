@@ -11,18 +11,6 @@ namespace Baitaplon
 {
     static class XFolder
     {
-        private static  event EventHandler test;
-        public static event EventHandler Test
-        {
-            add
-            {
-                test += value;
-            }
-            remove
-            {
-                test -= value;
-            }
-        }
         public static ListBox list;
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;

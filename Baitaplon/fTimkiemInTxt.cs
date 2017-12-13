@@ -135,7 +135,7 @@ namespace Baitaplon
             Loaifile a = rd_word.Checked ? Loaifile.Word : Loaifile.Txt;
             if (list.SelectedItem != null)
             {
-                fOpenText f = new fOpenText(list.SelectedItem.ToString(), a);
+                fOpenText f = new fOpenText(list.SelectedItem.ToString(),timkiem, a);
                 f.Show();
             }
         }
