@@ -9,9 +9,8 @@ namespace Baitaplon
 {
     public class XInfo
     {
-        public Image Picture;
-        public string Name;
-        public string Path;
+        #region Khởi tạo
+
         public XInfo(string path)
         {
             Picture = XImage.LoadImagebyExt(path);
@@ -24,6 +23,14 @@ namespace Baitaplon
             Name = name;
             Path = path;
         }
+        #endregion
+        #region Thuộc tính
+
+        public Image Picture;
+        public string Name;
+        public string Path;
+        #endregion
+        #region Phương thức
 
         // TRả về đường dẫn của file
         public override string ToString()
@@ -33,7 +40,7 @@ namespace Baitaplon
         //Trả về dữ liệu để in
         public string TextData()
         {
-            return Name + '\n' +"Path: " + Path ;
+            return Name + '\n' + "Path: " + Path;
         }
 
         // Draw the info's information in the rectangle.
@@ -73,5 +80,7 @@ namespace Baitaplon
                 }
             }
         }
+        #endregion
+
     }
 }

@@ -46,8 +46,9 @@ namespace Baitaplon
         }
         
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {            
-            XFolder.GetAll_DFS(txtFolderPath.Text, txtSearch.Text);
+        {
+            string[] keyword= txtSearch.Text.Split(',');
+            XFolder.GetAll_DFS(txtFolderPath.Text, keyword);
             backgroundWorker1.ReportProgress(100);
         }
 

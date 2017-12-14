@@ -23,18 +23,10 @@ namespace Baitaplon
         #region Thuộc tính
         public static System.Collections.Generic.Dictionary<int, int> listIndex = new Dictionary<int, int>();
 
-        public XImage()
-        {
-        }
-
 
         #endregion
         #region Phương thức
-
-        /// <summary>
-        /// load anh vao imagelist, gan key tuong ung vs loai key trong IndexImage, ko thi tang dan
-        /// </summary>
-        /// <param name="list"></param>
+        // load anh vao imagelist, gan key tuong ung vs loai key trong IndexImage, ko thi tang dan
         public static void LoadImageToList(ImageList list)
         {
             List<Image> temp = GetIconList();
@@ -52,11 +44,7 @@ namespace Baitaplon
             }
         }
 
-        /// <summary>
-        /// Lay ra ma so ung vs loai file trong IndexImage, neu ko co thi tra ve -1
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        //Lay ra ma so ung vs loai file trong IndexImage, neu ko co thi tra ve -1
         public static int GetIndexFromName(string name)
         {
             for (int i = 0; i < name.Length; i++)
@@ -79,17 +67,13 @@ namespace Baitaplon
             }
         }
 
-        /// <summary>
-        /// Lay danh sach anh
-        /// </summary>
-        /// <returns></returns>
+        //Lấy ra danh sách ảnh có trong folder ở đường dẫn XPath.pathfile_Image
         public static List<Image> GetIconList()
         {
             List<Image> temp = new List<Image>();
-            string filePath = Application.StartupPath + "\\Resource\\Icon";
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(filePath);
+                DirectoryInfo dir = new DirectoryInfo(XPath.pathfile_Image);
                 FileInfo[] dirs = dir.GetFiles();
                 foreach (FileInfo item in dirs)
                 {
@@ -109,8 +93,8 @@ namespace Baitaplon
         public static Image LoadImagebyExt(string path)
         {
             //lấy ra đuôi của đường dẫn
-            string ext = XPath.GetExtention(path);      
-            switch (ext)        
+            string ext = XPath.GetExtention(path);
+            switch (ext)
             {
                 case ".txt":
                     return Properties.Resources.txt;

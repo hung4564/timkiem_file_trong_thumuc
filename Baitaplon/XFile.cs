@@ -10,6 +10,7 @@ namespace Baitaplon
 {
     static class XFile
     {
+        #region Xử lý
 
         // sourcefilename là đường dấn link của file được copy
         // destPath là đường dấn tới nơi copy tới
@@ -121,7 +122,7 @@ namespace Baitaplon
             }
         }
 
-        //Lưu info của file vào fileinfo.txt
+        //Lưu info của file có đường dẫn path vào fileinfo.txt
         public static void CopyInfo(string path)
         {
             FileInfo f = new FileInfo(path);
@@ -134,6 +135,8 @@ namespace Baitaplon
             File.WriteAllText(@"FIleinfo.txt", result, Encoding.Unicode);
         }
 
+        #endregion
+        // thao tác tương ưng khi kích vào node trong treeview
         public static void ClickFile(string dirnode, TreeView treeView)
         {
             DirectoryInfo info = new DirectoryInfo(dirnode);
@@ -177,6 +180,7 @@ namespace Baitaplon
             }
         }
 
+        //trả về danh sách file trong thư mục có đường dẫn dirRoot vào List<treenode>
         public static List<TreeNode> LoadFile(string dirRoot)
         {
             List<TreeNode> listFile = new List<TreeNode>();
@@ -199,6 +203,7 @@ namespace Baitaplon
             return listFile;
         }
 
+        //Trả về danh sách toàn bộ file và folder có trong đường dẫn dirRoot vào treview
         public static void LoadFileandFolded(string dirRoot, TreeView treeView)
         {
             try
@@ -223,7 +228,7 @@ namespace Baitaplon
 
         }
 
-        //Trả về danh sách path chứa đuôi thỏa mãn
+        //Trả về danh sách path chứa đuôi thỏa mãn các từ trong ext ở trong folder có đường dẫn là root
         public static IEnumerable<string> GetFilebyExt_DFS(string root, string[] ext)//tìm kiếm theo chiều sâu
         {           
             //load danh sách theo chiêu sâu

@@ -10,7 +10,8 @@ namespace Baitaplon
 {
     class XDriveInfo
     {
-        public static void LoadDrives(TreeView treeNode)
+        //Lấy ra toàn bộ dirve vào trong treeview
+        public static void LoadDrives(TreeView treeview)
         {
             string[] drives = XDriveInfo.LoadDrive();
             int index = (int)XImage.listIndex[(int)IndexImage.Drive];
@@ -24,10 +25,10 @@ namespace Baitaplon
                 if (di.IsReady == true)
                     node.Nodes.Add("...");
                 //gắn node vào tree
-                treeNode.Nodes.Add(node);
+                treeview.Nodes.Add(node);
             }
         }
-
+        //Lấy ra danh sách toàn bộ dirve
         public static string[] LoadDrive()
         {
             return Directory.GetLogicalDrives();

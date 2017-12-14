@@ -9,10 +9,15 @@ namespace Baitaplon
 {
     class XTextInfo
     {
-        public Image Picture;
-        string name;
-        string path;
-        string lineresult;
+        #region Khởi tạo
+        public XTextInfo(string path,string keyword)
+        {
+            this.Picture = XImage.LoadImagebyExt(path);
+            this.name = XPath.GetFileNameWithoutExtension(path);
+            this.path = path;
+            this.keyword = keyword;
+            this.lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
+        }
         public XTextInfo(Image Picture, string name, string path, string lineresult)
         {
             this.Picture = Picture;
@@ -20,7 +25,17 @@ namespace Baitaplon
             this.path = path;
             this.lineresult = lineresult;
         }
-        // trả về đường dẫn
+        #endregion
+        #region Thuộc tính
+        public Image Picture;
+        string name;
+        string path;
+        string lineresult;
+        string keyword;
+        #endregion
+        #region Phương thức
+
+        // trả về đường dẫn của đối tướng
         public override string ToString()
         {
             return path;
@@ -31,6 +46,7 @@ namespace Baitaplon
         {
             return string.Format("{0}\nPath: {1}\nResult: {2}", name, path, lineresult);
         }
+
         // Draw the info's information in the rectangle.
         public void DrawItem(Graphics gr, Rectangle bounds, Font font, bool showNameOnly)
         {
@@ -68,5 +84,6 @@ namespace Baitaplon
                 }
             }
         }
+        #endregion
     }
 }

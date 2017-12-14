@@ -13,6 +13,7 @@ namespace Baitaplon
 {
     class XWord
     {
+        #region Thuộc tính
         private static event EventHandler chuyendoiRTF;
         public static event EventHandler ConventRTF
         {
@@ -29,7 +30,9 @@ namespace Baitaplon
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
         public static ProgressBar progressBar1;
-        //đọc file trả về nôi dung file dạng rtf
+        #endregion
+        #region Phương thức
+        //đọc file có đường dấn path trả về nôi dung file dạng rtf
         public static string ReadWord(string path)
         {
             fThongbao f = new fThongbao();
@@ -38,13 +41,13 @@ namespace Baitaplon
             {
                 f.Show();
                 DocToRtf(path);
-                using (StreamReader rd = new StreamReader(XPath.pathfilerft))
+                using (StreamReader rd = new StreamReader(XPath.pathfile_rft))
                 {
                     if (docfile != null)
                         docfile(null, EventArgs.Empty);
                     read = rd.ReadToEnd();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -57,7 +60,8 @@ namespace Baitaplon
             }
             return read;
         }
-        // tìm kiếm từ trong tất cả file word có trong thư mục root
+
+        // tìm kiếm từ trong tất cả file word có trong thư mục root chứ keyword
         public static void SearchALL(string root, string keyword)
         {
             lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm file txt trong " + root));
@@ -73,7 +77,8 @@ namespace Baitaplon
                 if (SearchInWord(path[i], keyword)) AddFileToListBox(path[i]);                       //nếu file word tồn tại keyword thì add vào listbox
             }
         }
-        //
+        
+        //Đưa file vào trong listbox
         static void AddFileToListBox(string path)
         {
             XInfo listitem = new XInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path);
@@ -86,25 +91,26 @@ namespace Baitaplon
             }));
 
         }
+
         //Chuyển file doc sang rtf để đọc
         //path là lưu đường dấn
         private static void DocToRtf(string filePath)
         {
             //Creating the instance of Word Application
-            if(chuyendoiRTF!=null)
+            if (chuyendoiRTF != null)
             {
                 chuyendoiRTF(null, EventArgs.Empty);
             }
             Microsoft.Office.Interop.Word.Application newApp = new Microsoft.Office.Interop.Word.Application();
             object Unknown = Type.Missing;
-            if (XPath.GetExtention(filePath) == ".doc" || XPath.GetExtention(filePath) == ".docx")
+            if (XPath.IsEqualExt(filePath, new string[] { ".doc", ".docx" }))
             {
                 try
                 {
                     //lấy địa chỉ file word
-                    object Source = filePath;   
+                    object Source = filePath;
                     //địa chỉ file rtf tạo ra tạm
-                    object Target = XPath.pathfilerft;
+                    object Target = XPath.pathfile_rft;
                     //nếu file tồn tại thì xóa đi
                     if (File.Exists(Target.ToString()))
                     {
@@ -144,6 +150,7 @@ namespace Baitaplon
             }
             else return;
         }
+
         //tìm kiếm từ trong file word(có office từ 2013 trở lên?)
         //path là lưu đường dẫn của file mình cần tìm
         //findText là từ mình cần tìm kiếm trong file word đó
@@ -175,5 +182,7 @@ namespace Baitaplon
             }
             return result;
         }
+        #endregion
+
     }
 }

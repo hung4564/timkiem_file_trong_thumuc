@@ -11,9 +11,14 @@ namespace Baitaplon
 {
     static class XFolder
     {
+        #region Thuộc tính
         public static ListBox list;
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
+        #endregion
+        #region Phương thức
+        #region Xử lý
+
         //Copyfolder ở từ sourcefoler sang destFolder
         static public void CopyFolder(string sourceFolder, string destFolder)
         {
@@ -81,6 +86,10 @@ namespace Baitaplon
             string destFolder = destPath + "\\" + XPath.GetFileNameWithoutExtension(sourceFolder);
             MoveFolder(sourceFolder, destFolder);
         }
+
+        #endregion
+
+        //trả về danh sách folder trong thư mục có đường dirRoot vào treenode
         public static List<TreeNode> LoadFolder(string dirRoot)
         {
             string[] dirs = Directory.GetDirectories(dirRoot);
@@ -118,7 +127,8 @@ namespace Baitaplon
             }
             return listFolder;
         }
-        //Trả về danh sách path thỏa man vào listbox
+
+        //Trả về danh sách path thỏa mãn vào listbox chứa 1 chuỗi
         public static void GetAll_DFS(string root, string search)//tìm kiếm theo chiều sâu
         {
             int i = 0;
@@ -129,7 +139,7 @@ namespace Baitaplon
             {
                 var path = pending.Pop();
                 string[] next = null;
-                
+
                 backgroundWorker1.ReportProgress(i / all * 100);
                 i++;
                 try
@@ -175,9 +185,67 @@ namespace Baitaplon
             }
         }
 
-        static void AddFolderToListBox(string item)
+        //Trả về danh sách path thỏa mãn vào listbox chứa 1 từ trong số các từ tìm kiếm
+        public static void GetAll_DFS(string root, string[] search)//tìm kiếm theo chiều sâu
         {
-            XInfo listitem = new XInfo(Properties.Resources.folder, XPath.GetFileNameWithoutExtension(item), item);
+            int i = 0;
+            int all = 1;
+            Stack<string> pending = new Stack<string>();
+            pending.Push(root);
+            while (pending.Count != 0)
+            {
+                var path = pending.Pop();
+                string[] next = null;
+
+                backgroundWorker1.ReportProgress(i / all * 100);
+                i++;
+                try
+                {
+                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    foreach (var subdir in next) pending.Push(subdir);  //cho vào trong stack
+                    if (next != null) all += next.Count();
+                }
+                catch { }
+                if (next != null)
+                    foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
+                    {
+                        if (backgroundWorker1.CancellationPending)
+                        {
+                            return;
+                        }
+                        lblProgress.Invoke((Action)(() => lblProgress.Text = item));
+                        if (XPath.IsEqualName(item, search))
+                        {
+                            AddFolderToListBox(item);
+
+                        }
+                    }
+                try
+                {
+                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                }
+                catch { }
+                if (next != null)
+                    foreach (string item in next)                       //kiếm tra trong các file tên có chứa chuối cần tìm
+                    {
+                        if (backgroundWorker1.CancellationPending)
+                        {
+                            return;
+                        }
+                        lblProgress.Invoke((Action)(() => lblProgress.Text = item));
+                        if (XPath.IsEqualName(item, search))
+                        {
+                            AddFileToListBox(item);
+                        }
+                    }
+
+            }
+        }
+
+        //Đưa path vào danh sách listbox
+        static void AddFolderToListBox(string path)
+        {
+            XInfo listitem = new XInfo(Properties.Resources.folder, XPath.GetFileNameWithoutExtension(path), path);
 
             list.Invoke((Action)(() =>
             {
@@ -187,9 +255,9 @@ namespace Baitaplon
             }));
 
         }
-        static void AddFileToListBox(string item)
+        static void AddFileToListBox(string path)
         {
-            XInfo listitem = new XInfo(XImage.LoadImagebyExt(item), XPath.GetFileNameWithoutExtension(item), item);
+            XInfo listitem = new XInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path);
 
             list.Invoke((Action)(() =>
             {
@@ -199,5 +267,6 @@ namespace Baitaplon
             }));
 
         }
+        #endregion
     }
 }

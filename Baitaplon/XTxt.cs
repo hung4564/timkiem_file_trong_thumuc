@@ -11,11 +11,15 @@ namespace Baitaplon
 {
     class XTxt
     {
+        #region Thuộc tính
         public static ListBox list;
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
         public static ProgressBar progressBar1;
-        //Tím kiếm từ trong tất cả các file ở thư mục root;
+        #endregion
+        #region Phương thức
+
+        //Tím kiếm từ trong tất cả các file ở thư mục root chưa key word
         public static void SearchALL(string root, string keyword)
         {
             lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm file txt trong " + root));
@@ -28,7 +32,7 @@ namespace Baitaplon
                 {
                     return;
                 }
-                string lineresult = SearchTextInFile(path[i], keyword);
+                string lineresult = GetLineHaveKeyWord(path[i], keyword);
                 if (lineresult != null)
                 {
                     AddFileToListBox(path[i], lineresult);
@@ -36,7 +40,7 @@ namespace Baitaplon
             }
         }
 
-        //đọc file txt tra về nội dung file
+        //đọc file txt, có đường dẫn là path, tra về nội dung file
         public static string ReadText(string path)
         {
             try
@@ -55,6 +59,7 @@ namespace Baitaplon
 
         }
 
+        //add file, có đường dẫn là path, vào trong listbox list
         static void AddFileToListBox(string path, string lineresult)
         {
             XTextInfo listitem = new XTextInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path, lineresult);
@@ -67,7 +72,7 @@ namespace Baitaplon
             }));
         }
 
-        //đọc từng dòng của txt
+        //đọc từng dòng của txt có đường dẫn là path
         public static IEnumerable<string> ReadLineText(string path)
         {
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -82,22 +87,22 @@ namespace Baitaplon
             }
         }
 
-        //Ghi từng dòng vào file
-        public static void WriteFirstLine(string filename, string writetex)
+        //Ghi từ writetx vào dòng đầu tiên vào file có đường dẫn là path
+        public static void WriteFirstLine(string path, string writetex)
         {
             string tempfile = Path.GetTempFileName();
             using (var writer = new StreamWriter(tempfile))
-            using (var reader = new StreamReader(filename))
+            using (var reader = new StreamReader(path))
             {
                 writer.WriteLine(writetex);
                 while (!reader.EndOfStream)
                     writer.WriteLine(reader.ReadLine());
             }
-            File.Copy(tempfile, filename, true);
+            File.Copy(tempfile, path, true);
         }
 
-        //tìm kiếm từ trong file, nó trả về dòng chứa từ đó       
-        public static string SearchTextInFile(string path, string keyword)
+        //tìm kiếm từ keyword trong file có đường dẫn path, nó trả về dòng chứa từ đó       
+        public static string GetLineHaveKeyWord(string path, string keyword)
         {
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
             using (var sr = new StreamReader(inFile))
@@ -114,5 +119,6 @@ namespace Baitaplon
             }
             return null;
         }
+        #endregion
     }
 }
