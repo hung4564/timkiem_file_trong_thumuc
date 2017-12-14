@@ -72,9 +72,7 @@ namespace Baitaplon
         //so sánh tên file trong path vs từ search
         public static bool IsEqualName(string path, string search)
         {
-            //chuyển tất cả kí tự về kí tự thường
-            search = search.ToLower();
-            return XPath.GetFileNameWithoutExtension(path).ToLower().Contains(search);
+            return XPath.GetFileNameWithoutExtension(path).Contains(search);
         }
 
         //so sánh tên file trong path vs nhiều từ
@@ -85,8 +83,8 @@ namespace Baitaplon
             //lấy ra từng đuôi một để so sánh
             for (int i = 0; i < keyword.Length; i++)
             {
-                keyword[i] = keyword[i].ToLower();
-                if (XPath.GetFileNameWithoutExtension(path).ToLower().Contains(keyword[i])) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                keyword[i] = keyword[i];
+                if (XPath.GetFileNameWithoutExtension(path).Contains(keyword[i])) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
             }
             return check;
         }
@@ -94,11 +92,10 @@ namespace Baitaplon
         //so sánh đuôi file trong path vs ext,ext chứa đuôi cần so sánh
         public static bool IsEqualExt(string path, string ext)
         {
-            ext = ext.ToLower();
             if (!ext.Contains(".")) ext = "." + ext;
             if (XPath.GetExtention(path) == null) return false;
             else
-            if (XPath.GetExtention(path).ToLower() == ext) return true;
+            if (XPath.GetExtention(path)== ext) return true;
             else
                 return false;
         }
@@ -113,8 +110,7 @@ namespace Baitaplon
             {
                 //thêm dấu chấm vs chuyển thành chữ thường đề phòng
                 if (!ext[i].Contains(".")) ext[i] = "." + ext[i];
-                ext[i] = ext[i].ToLower();
-                if (XPath.GetExtention(path).ToLower() == ext[i]) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                if (XPath.GetExtention(path) == ext[i]) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
             }
             return check;
         }
