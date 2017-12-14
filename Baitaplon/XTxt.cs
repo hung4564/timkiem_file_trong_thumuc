@@ -101,17 +101,18 @@ namespace Baitaplon
             File.Copy(tempfile, path, true);
         }
 
-        //tìm kiếm từ keyword trong file có đường dẫn path, nó trả về dòng chứa từ đó       
+        //tìm kiếm từ keyword trong file có đường dẫn path, trả về dòng chứa từ đó       
         public static string GetLineHaveKeyWord(string path, string keyword)
         {
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
+            keyword = RemoveSign4VietnameseString(keyword);
             using (var sr = new StreamReader(inFile))
             {
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine();
                     if (String.IsNullOrEmpty(line)) continue;
-                    if (line.IndexOf(keyword,StringComparison.CurrentCulture) >= 0)
+                    if (RemoveSign4VietnameseString(line).IndexOf(keyword,StringComparison.CurrentCultureIgnoreCase) >= 0)
                     {
                         return line;
                     }
@@ -119,8 +120,6 @@ namespace Baitaplon
             }
             return null;
         }
-
-
         private static readonly string[] VietnameseSigns = new string[]{
 
         "aAeEoOuUiIdDyY",
@@ -156,23 +155,14 @@ namespace Baitaplon
    };
 
         public static string RemoveSign4VietnameseString(string str)
-
         {
-
             //Tiến hành thay thế , lọc bỏ dấu cho chuỗi
-
             for (int i = 1; i < VietnameseSigns.Length; i++)
-
             {
-
                 for (int j = 0; j < VietnameseSigns[i].Length; j++)
-
                     str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
-
             }
-
             return str;
-
         }
         #endregion
     }

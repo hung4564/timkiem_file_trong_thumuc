@@ -72,7 +72,8 @@ namespace Baitaplon
         //so sánh tên file trong path vs từ search
         public static bool IsEqualName(string path, string search)
         {
-            return XPath.GetFileNameWithoutExtension(path).Contains(search);
+            search = XTxt.RemoveSign4VietnameseString(search);
+            return XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(search,StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         //so sánh tên file trong path vs nhiều từ
@@ -83,8 +84,8 @@ namespace Baitaplon
             //lấy ra từng đuôi một để so sánh
             for (int i = 0; i < keyword.Length; i++)
             {
-                keyword[i] = keyword[i];
-                if (XPath.GetFileNameWithoutExtension(path).Contains(keyword[i])) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                keyword[i] = XTxt.RemoveSign4VietnameseString(keyword[i]); 
+                if (XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(keyword[i], StringComparison.CurrentCultureIgnoreCase)>=0) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
             }
             return check;
         }
@@ -92,13 +93,15 @@ namespace Baitaplon
         //so sánh đuôi file trong path vs ext,ext chứa đuôi cần so sánh
         public static bool IsEqualExt(string path, string ext)
         {
+            ext = ext.ToLower();
             if (!ext.Contains(".")) ext = "." + ext;
             if (XPath.GetExtention(path) == null) return false;
             else
-            if (XPath.GetExtention(path)== ext) return true;
+            if (XPath.GetExtention(path).Equals(ext, StringComparison.CurrentCultureIgnoreCase)) return true;
             else
                 return false;
         }
+        
 
         //so sánh đuôi file trong path vs ext,ext chứa các đuôi cần so sánh
         public static bool IsEqualExt(string path, string[] ext)
@@ -110,7 +113,7 @@ namespace Baitaplon
             {
                 //thêm dấu chấm vs chuyển thành chữ thường đề phòng
                 if (!ext[i].Contains(".")) ext[i] = "." + ext[i];
-                if (XPath.GetExtention(path) == ext[i]) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                if (XPath.GetExtention(path).Equals(ext[i],StringComparison.CurrentCultureIgnoreCase)) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
             }
             return check;
         }
