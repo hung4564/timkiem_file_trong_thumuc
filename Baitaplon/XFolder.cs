@@ -15,6 +15,7 @@ namespace Baitaplon
         public static ListBox list;
         public static Label lblProgress;
         public static BackgroundWorker backgroundWorker1;
+        static XFilter boloc=null;
         #endregion
         #region Phương thức
         #region Xử lý
@@ -127,7 +128,22 @@ namespace Baitaplon
             }
             return listFolder;
         }
-
+        public static void GetAll_DFS(string root, string search,XFilter loc)
+        {
+            boloc = loc;
+            switch (loc.loailoc)
+            {
+                case Loailoc.Loctheotungtu:
+                    string[] keyword = search.Split(',');
+                    GetAll_DFS(root, keyword);
+                    break;
+                case Loailoc.Loctheochuoi:
+                    GetAll_DFS(root, search);
+                    break;
+                default:
+                    break;
+            }
+        }
         //Trả về danh sách path thỏa mãn vào listbox chứa 1 chuỗi
         public static void GetAll_DFS(string root, string search)//tìm kiếm theo chiều sâu
         {
@@ -157,7 +173,7 @@ namespace Baitaplon
                             return;
                         }
                         lblProgress.Invoke((Action)(() => lblProgress.Text = item));
-                        if (XPath.IsEqualName(item, search))
+                        if (boloc.IsSatisfy(item)&&XPath.IsEqualName(item, search))
                         {
                             AddFolderToListBox(item);
 
@@ -176,7 +192,7 @@ namespace Baitaplon
                             return;
                         }
                         lblProgress.Invoke((Action)(() => lblProgress.Text = item));
-                        if (XPath.IsEqualName(item, search))
+                        if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
                         {
                             AddFileToListBox(item);
                         }
@@ -186,7 +202,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào listbox chứa 1 từ trong số các từ tìm kiếm
-        public static void GetAll_DFS(string root, string[] search)//tìm kiếm theo chiều sâu
+        public static void GetAll_DFS(string root, string[] keyword)//tìm kiếm theo chiều sâu
         {
             int i = 0;
             int all = 1;
@@ -214,7 +230,7 @@ namespace Baitaplon
                             return;
                         }
                         lblProgress.Invoke((Action)(() => lblProgress.Text = item));
-                        if (XPath.IsEqualName(item, search))
+                        if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
                         {
                             AddFolderToListBox(item);
 
@@ -233,7 +249,7 @@ namespace Baitaplon
                             return;
                         }
                         lblProgress.Invoke((Action)(() => lblProgress.Text = item));
-                        if (XPath.IsEqualName(item, search))
+                        if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
                         {
                             AddFileToListBox(item);
                         }

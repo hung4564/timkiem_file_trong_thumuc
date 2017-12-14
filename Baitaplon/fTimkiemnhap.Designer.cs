@@ -38,7 +38,7 @@
             this.helpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.bt_boloc = new System.Windows.Forms.Button();
             this.listBox_timkiem = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -126,16 +126,16 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Ổ tìm kiếm";
             // 
-            // button3
+            // bt_boloc
             // 
-            this.button3.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button3.Location = new System.Drawing.Point(383, 46);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Bộ lọc";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.bt_boloc.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.bt_boloc.Location = new System.Drawing.Point(383, 46);
+            this.bt_boloc.Name = "bt_boloc";
+            this.bt_boloc.Size = new System.Drawing.Size(75, 23);
+            this.bt_boloc.TabIndex = 10;
+            this.bt_boloc.Text = "Bộ lọc";
+            this.bt_boloc.UseVisualStyleBackColor = false;
+            this.bt_boloc.Click += new System.EventHandler(this.button3_Click);
             // 
             // listBox_timkiem
             // 
@@ -215,7 +215,7 @@
             this.Controls.Add(this.lblPercent);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listBox_timkiem);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.bt_boloc);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.txtSearch);
@@ -242,7 +242,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button bt_boloc;
         private System.Windows.Forms.ToolStripMenuItem helpsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem;
         private System.Windows.Forms.ListBox listBox_timkiem;

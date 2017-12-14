@@ -66,6 +66,7 @@
     <Compile Include="fTimkiemInTxt.Designer.cs">
       <DependentUpon>fTimkiemInTxt.cs</DependentUpon>
     </Compile>
+    <Compile Include="XFilter.cs" />
     <Compile Include="XImage.cs" />
     <Compile Include="fAboutus.cs">
       <SubType>Form</SubType>

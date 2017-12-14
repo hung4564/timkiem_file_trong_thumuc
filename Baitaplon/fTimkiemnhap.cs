@@ -7,12 +7,10 @@ namespace Baitaplon
 {
     public partial class fTimkiemnhap : Form
     {
-        string timkiem
-        {
-            get { return txtSearch.Text; }
-        }
+        XFilter filter;
         public fTimkiemnhap()
         {
+            filter = new XFilter();
             InitializeComponent();
             backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerReportsProgress = true;
@@ -25,9 +23,8 @@ namespace Baitaplon
             XFolder.lblProgress = lblProgress;
             XFolder.backgroundWorker1 = backgroundWorker1;
             //comboBox2.DataSource = XDriveInfo.LoadDrive();
-           listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;  
+            listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
         }
-        
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -39,16 +36,15 @@ namespace Baitaplon
             {
                 progressBar1.Value = progressBar1.Minimum;
                 btnSearch.Text = "Stop";
-                XTxt.WriteFirstLine(XPath.pathfile_history_name, timkiem);
+                XTxt.WriteFirstLine(XPath.pathfile_history_name, txtSearch.Text);
                 listBox_timkiem.Items.Clear();
                 backgroundWorker1.RunWorkerAsync();
             }
         }
-        
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            string[] keyword= txtSearch.Text.Split(',');
-            XFolder.GetAll_DFS(txtFolderPath.Text, keyword);
+            XFolder.GetAll_DFS(txtFolderPath.Text, txtSearch.Text, filter);
             backgroundWorker1.ReportProgress(100);
         }
 
@@ -71,7 +67,7 @@ namespace Baitaplon
             }
             btnSearch.Text = "Search";
         }
-        
+
         // Indicate the amount of space needed for a ListBox item.
         private const int ItemHeight = 50;
         private void listBox_timkiem_MeasureItem(object sender, MeasureItemEventArgs e)
@@ -99,7 +95,7 @@ namespace Baitaplon
             ListBox list = sender as ListBox;
             if (list.SelectedItem != null)
             {
-                XTxt.WriteFirstLine(XPath.pathfile_history_file,list.SelectedItem.ToString());
+                XTxt.WriteFirstLine(XPath.pathfile_history_file, list.SelectedItem.ToString());
                 fDetail f = new fDetail(list.SelectedItem.ToString());
                 f.Show();
             }
@@ -120,7 +116,7 @@ namespace Baitaplon
 
         private void button3_Click(object sender, EventArgs e)
         {
-            fBoloc f = new fBoloc();
+            fBoloc f = new fBoloc(filter);
             f.Show();
         }
     }
