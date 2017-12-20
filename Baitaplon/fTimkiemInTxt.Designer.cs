@@ -37,13 +37,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.txtFolderPath = new System.Windows.Forms.TextBox();
             this.lblProgress = new System.Windows.Forms.Label();
             this.lblPercent = new System.Windows.Forms.Label();
             this.btn_location = new System.Windows.Forms.Button();
             this.rd_word = new System.Windows.Forms.RadioButton();
             this.rd_TXT = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtFolderPath = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listBox_timkiem
@@ -81,6 +81,7 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(260, 20);
             this.txtSearch.TabIndex = 14;
+            this.txtSearch.Text = "pham";
             // 
             // btnSearch
             // 
@@ -130,14 +131,6 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
-            // txtFolderPath
-            // 
-            this.txtFolderPath.Location = new System.Drawing.Point(113, 45);
-            this.txtFolderPath.Name = "txtFolderPath";
-            this.txtFolderPath.Size = new System.Drawing.Size(98, 20);
-            this.txtFolderPath.TabIndex = 23;
-            this.txtFolderPath.Text = "C:\\\\";
             // 
             // lblProgress
             // 
@@ -189,6 +182,7 @@
             this.rd_TXT.TabStop = true;
             this.rd_TXT.Text = "TxT";
             this.rd_TXT.UseVisualStyleBackColor = true;
+            this.rd_TXT.CheckedChanged += new System.EventHandler(this.rd_TXT_CheckedChanged);
             // 
             // label4
             // 
@@ -200,6 +194,14 @@
             this.label4.Size = new System.Drawing.Size(70, 15);
             this.label4.TabIndex = 29;
             this.label4.Text = "Loại file tìm";
+            // 
+            // txtFolderPath
+            // 
+            this.txtFolderPath.Location = new System.Drawing.Point(113, 45);
+            this.txtFolderPath.Name = "txtFolderPath";
+            this.txtFolderPath.Size = new System.Drawing.Size(98, 20);
+            this.txtFolderPath.TabIndex = 23;
+            this.txtFolderPath.Text = "E:\\\\";
             // 
             // fTimkiemInTxt
             // 
@@ -240,12 +242,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.TextBox txtFolderPath;
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Label lblPercent;
         private System.Windows.Forms.Button btn_location;
         private System.Windows.Forms.RadioButton rd_word;
         private System.Windows.Forms.RadioButton rd_TXT;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtFolderPath;
     }
 }

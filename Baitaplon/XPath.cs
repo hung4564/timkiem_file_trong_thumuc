@@ -72,8 +72,9 @@ namespace Baitaplon
         //so sánh tên file trong path vs từ search
         public static bool IsEqualName(string path, string search)
         {
-            search = XTxt.RemoveSign4VietnameseString(search);
-            return XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(search,StringComparison.CurrentCultureIgnoreCase) >= 0;
+            //search = XTxt.RemoveSign4VietnameseString(search);
+            return XPath.GetFileNameWithoutExtension(path).IndexOf(search, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            //return XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(search,StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         //so sánh tên file trong path vs nhiều từ
@@ -84,8 +85,9 @@ namespace Baitaplon
             //lấy ra từng đuôi một để so sánh
             for (int i = 0; i < keyword.Length; i++)
             {
-                keyword[i] = XTxt.RemoveSign4VietnameseString(keyword[i]); 
-                if (XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(keyword[i], StringComparison.CurrentCultureIgnoreCase)>=0) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                //keyword[i] = XTxt.RemoveSign4VietnameseString(keyword[i]); 
+                //if (XTxt.RemoveSign4VietnameseString(XPath.GetFileNameWithoutExtension(path)).IndexOf(keyword[i], StringComparison.CurrentCultureIgnoreCase)>=0) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
+                if (XPath.GetFileNameWithoutExtension(path).IndexOf(keyword[i], StringComparison.CurrentCultureIgnoreCase) >= 0) return true;// nếu tm 1 đuôi trong chỗ đuỗi thi thoát
             }
             return check;
         }

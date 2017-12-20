@@ -18,8 +18,6 @@ namespace Baitaplon
         {
             InitializeComponent();
             listBox_file.DrawMode = DrawMode.OwnerDrawVariable;
-            listBox_file.DrawItem += ListBox_file_DrawItem;
-            listBox_file.MeasureItem += ListBox_file_MeasureItem;
             loadLichsuTen();
             loadLichsuFile();
         }
@@ -55,7 +53,11 @@ namespace Baitaplon
         void loadLichsuFile()
         {
             string[] result = XTxt.ReadLineText(XPath.pathfile_history_file).ToArray();
-            if (result.Count() == 0) listBox_tu.Items.Add("Không có file mở gần đây");
+            if (result.Count() == 0)
+            {
+                listBox_file.DrawMode = DrawMode.Normal;
+                listBox_file.Items.Add("Không có file mở gần đây");
+            }
             else
                 foreach (string item in result)
                 {

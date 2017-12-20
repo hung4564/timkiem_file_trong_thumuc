@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Baitaplon
@@ -8,49 +10,55 @@ namespace Baitaplon
     public partial class fTimkiemnhap : Form
     {
         XFilter filter;
+        Queue<string> queue_result = new Queue<string>();
+        // Indicate the amount of space needed for a ListBox item.
+        private const int ItemHeight = 50;
         public fTimkiemnhap()
         {
             filter = new XFilter();
             InitializeComponent();
-            backgroundWorker1 = new BackgroundWorker();
-            backgroundWorker1.WorkerReportsProgress = true;
-            backgroundWorker1.WorkerSupportsCancellation = true;
-
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
-            backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-            XFolder.list = listBox_timkiem;
-            XFolder.lblProgress = lblProgress;
-            XFolder.backgroundWorker1 = backgroundWorker1;
-            //comboBox2.DataSource = XDriveInfo.LoadDrive();
+            bgW_loadfile.WorkerReportsProgress = true;
+            bgW_loadfile.WorkerSupportsCancellation = true;
+            XFolder.queue_result = queue_result;
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        void RunSearch()
         {
-            if (backgroundWorker1.IsBusy)
+            XFolder.GetAll_DFS(txtFolderPath.Text, txtSearch.Text, filter);
+        }
+
+        void AddFileToListBox(string path)
+        {
+            XInfo listitem = new XInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path);
+
+            listBox_timkiem.Invoke((Action)(() =>
             {
-                backgroundWorker1.CancelAsync();
-            }
-            else
-            {
-                progressBar1.Value = progressBar1.Minimum;
-                btnSearch.Text = "Stop";
-                XTxt.WriteFirstLine(XPath.pathfile_history_name, txtSearch.Text);
-                listBox_timkiem.Items.Clear();
-                backgroundWorker1.RunWorkerAsync();
-            }
+                listBox_timkiem.BeginUpdate();
+                listBox_timkiem.Items.Add(listitem);
+                listBox_timkiem.EndUpdate();
+            }));
+
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            XFolder.GetAll_DFS(txtFolderPath.Text, txtSearch.Text, filter);
-            backgroundWorker1.ReportProgress(100);
+            for (int i  = 0; i  <progressBar1.Maximum; i ++)
+            {
+                if(bgW_loadfile.CancellationPending)
+                {
+                    break;
+                }
+                if (queue_result.Count > 0) AddFileToListBox(queue_result.Dequeue());
+                bgW_loadfile.ReportProgress(i);
+                System.Threading.Thread.Sleep(1000);
+            }
+            bgW_loadfile.ReportProgress(100);
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (!backgroundWorker1.CancellationPending)
+            if (!bgW_loadfile.CancellationPending)
             {
                 lblPercent.Text = e.ProgressPercentage + "%";
                 progressBar1.Value = e.ProgressPercentage;
@@ -59,22 +67,20 @@ namespace Baitaplon
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
+            queue_result.Clear();
             lblProgress.Text = String.Format("{0} files found", listBox_timkiem.Items.Count);
             if (progressBar1.Value < progressBar1.Maximum)
             {
                 lblProgress.Text = "Searching cancelled. " + lblProgress.Text;
             }
-            btnSearch.Text = "Search";
+            btnSearch.Text = "Tìm kiếm";
         }
 
-        // Indicate the amount of space needed for a ListBox item.
-        private const int ItemHeight = 50;
         private void listBox_timkiem_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             e.ItemHeight = ItemHeight;
         }
-        // Draw a ListBox item.
+
         private void listBox_timkiem_DrawItem(object sender, DrawItemEventArgs e)
         {
             ListBox listBox = sender as ListBox;
@@ -111,6 +117,29 @@ namespace Baitaplon
                 {
                     txtFolderPath.Text = fbd.SelectedPath;
                 }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            Thread ts;
+            ts = new Thread(RunSearch);
+            if (bgW_loadfile.IsBusy)
+            {
+                ts.Abort();
+                bgW_loadfile.CancelAsync();
+            }
+            else
+            {
+                progressBar1.Value = progressBar1.Minimum;
+                btnSearch.Text = "Stop";
+                XTxt.WriteFirstLine(XPath.pathfile_history_name, txtSearch.Text);
+                listBox_timkiem.Items.Clear();
+                lblProgress.Text = "Đang tìm kiếm file";
+                ts.IsBackground = true;
+                ts.Start();
+                bgW_loadfile.RunWorkerAsync();
             }
         }
 

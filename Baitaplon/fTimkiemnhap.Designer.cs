@@ -41,7 +41,7 @@
             this.bt_boloc = new System.Windows.Forms.Button();
             this.listBox_timkiem = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.bgW_loadfile = new System.ComponentModel.BackgroundWorker();
             this.lblPercent = new System.Windows.Forms.Label();
             this.lblProgress = new System.Windows.Forms.Label();
             this.txtFolderPath = new System.Windows.Forms.TextBox();
@@ -66,7 +66,7 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(103, 26);
             this.btnSearch.TabIndex = 1;
-            this.btnSearch.Text = "Bắt Đầu Tìm Kiếm";
+            this.btnSearch.Text = "Tìm Kiếm";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -160,11 +160,11 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "Từ tìm kiếm";
             // 
-            // backgroundWorker1
+            // bgW_loadfile
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.bgW_loadfile.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.bgW_loadfile.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.bgW_loadfile.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // lblPercent
             // 
@@ -247,7 +247,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem;
         private System.Windows.Forms.ListBox listBox_timkiem;
         private System.Windows.Forms.Label label3;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker bgW_loadfile;
         private System.Windows.Forms.Label lblPercent;
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.TextBox txtFolderPath;

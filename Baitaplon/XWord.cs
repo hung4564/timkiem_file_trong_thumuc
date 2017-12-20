@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using System.Drawing;
 using System.IO;
@@ -14,6 +13,19 @@ namespace Baitaplon
     class XWord
     {
         #region Thuộc tính
+        public static Queue<string> queue_result;
+        private static event EventHandler timkiem;
+        public static event EventHandler Timkiem
+        {
+            add { timkiem += value; }
+            remove { timkiem -= value; }
+        }
+        private static event EventHandler done;
+        public static event EventHandler Done
+        {
+            add { done += value; }
+            remove { done -= value; }
+        }
         private static event EventHandler chuyendoiRTF;
         public static event EventHandler ConventRTF
         {
@@ -26,10 +38,6 @@ namespace Baitaplon
             add { docfile += value; }
             remove { docfile -= value; }
         }
-        public static ListBox list;
-        public static Label lblProgress;
-        public static BackgroundWorker backgroundWorker1;
-        public static ProgressBar progressBar1;
         #endregion
         #region Phương thức
         //đọc file có đường dấn path trả về nôi dung file dạng rtf
@@ -49,10 +57,9 @@ namespace Baitaplon
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message, "Readword");
-                read = "Không đọc được";
+                read = null;
             }
             finally
             {
@@ -64,33 +71,17 @@ namespace Baitaplon
         // tìm kiếm từ trong tất cả file word có trong thư mục root chứ keyword
         public static void SearchALL(string root, string keyword)
         {
-            lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm file txt trong " + root));
             List<string> path = XFile.GetFilebyExt_DFS(root, new string[] { ".doc", "docx" }).ToList();    //lấy toàn bộ file word;
+            if (timkiem != null)
+                timkiem(null, EventArgs.Empty);
             for (int i = 0; i < path.Count; i++)                                                        //load từng file word
             {
-                lblProgress.Invoke((Action)(() => lblProgress.Text = path[i]));
-                backgroundWorker1.ReportProgress((int)(i / path.Count * 100));
-                if (backgroundWorker1.CancellationPending)
-                {
-                    return;
-                }
-                if (SearchInWord(path[i], keyword)) AddFileToListBox(path[i]);                       //nếu file word tồn tại keyword thì add vào listbox
+                if (SearchInWord(path[i], keyword)) queue_result.Enqueue(path[i]);                       //nếu file word tồn tại keyword thì add vào listbox
             }
+            if (done != null)
+                done(null, EventArgs.Empty);
         }
         
-        //Đưa file vào trong listbox
-        static void AddFileToListBox(string path)
-        {
-            XInfo listitem = new XInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path);
-
-            list.Invoke((Action)(() =>
-            {
-                list.BeginUpdate();
-                list.Items.Add(listitem);
-                list.EndUpdate();
-            }));
-
-        }
 
         //Chuyển file doc sang rtf để đọc
         //path là lưu đường dấn
@@ -138,9 +129,9 @@ namespace Baitaplon
                     // for closing the application
                     newApp.Quit(ref Unknown, ref Unknown, ref Unknown);
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
-                    MessageBox.Show(ex.Message, "docToRtf");
+
                 }
                 finally
                 {
@@ -163,7 +154,7 @@ namespace Baitaplon
             {
                 object missing = System.Reflection.Missing.Value;
                 wordApp.Documents.Open(filePath, false, true, false, "", "");           //mở file word
-
+                if (wordApp.ActiveWindow.View.ReadingLayout) wordApp.ActiveWindow.View.ReadingLayout = false;
                 if (wordApp.Application.Selection.Find.Execute(findText))               //tìm từ trong file word
                 {
                     result = true;
@@ -171,9 +162,8 @@ namespace Baitaplon
                 object nullobject = System.Reflection.Missing.Value;
                 wordApp.Quit(ref nullobject, ref nullobject, ref nullobject);
             }
-            catch (Exception ex)                                                        //báo lỗi gặp
+            catch (Exception)                                                        //báo lỗi gặp
             {
-                MessageBox.Show(ex.Message, "SearchInWord");
             }
             finally                                                                    //đóng file word lại
             {

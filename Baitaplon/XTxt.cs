@@ -5,39 +5,44 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace Baitaplon
 {
     class XTxt
     {
         #region Thuộc tính
-        public static ListBox list;
-        public static Label lblProgress;
-        public static BackgroundWorker backgroundWorker1;
-        public static ProgressBar progressBar1;
+        public static Queue<string> queue_result;
+        private static event EventHandler timkiem;
+        public static event EventHandler Timkiem
+        {
+            add { timkiem += value; }
+            remove { timkiem -= value; }
+        }
+        private static event EventHandler done;
+        public static event EventHandler Done
+        {
+            add { done += value; }
+            remove { done -= value; }
+        }
         #endregion
         #region Phương thức
 
         //Tím kiếm từ trong tất cả các file ở thư mục root chưa key word
         public static void SearchALL(string root, string keyword)
         {
-            lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm file txt trong " + root));
             List<string> path = XFile.GetFilebyExt_DFS(root, new string[] { ".txt" }).ToList();
+            if (timkiem != null)
+                timkiem(null, EventArgs.Empty);
             for (int i = 0; i < path.Count; i++)
             {
-                lblProgress.Invoke((Action)(() => lblProgress.Text = path[i]));
-                backgroundWorker1.ReportProgress((int)(i / path.Count * 100));
-                if (backgroundWorker1.CancellationPending)
-                {
-                    return;
-                }
                 string lineresult = GetLineHaveKeyWord(path[i], keyword);
                 if (lineresult != null)
                 {
-                    AddFileToListBox(path[i], lineresult);
+                    queue_result.Enqueue(path[i]);
                 }
             }
+            if (done != null)
+                done(null, EventArgs.Empty);
         }
 
         //đọc file txt, có đường dẫn là path, tra về nội dung file
@@ -51,30 +56,23 @@ namespace Baitaplon
                     return read;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Mở file lỗi:\n" + ex.Message);
-                return "Không đọc được file";
+                return null;
             }
 
         }
 
         //add file, có đường dẫn là path, vào trong listbox list
-        static void AddFileToListBox(string path, string lineresult)
-        {
-            XTextInfo listitem = new XTextInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path, lineresult);
 
-            list.Invoke((Action)(() =>
-            {
-                list.BeginUpdate();
-                list.Items.Add(listitem);
-                list.EndUpdate();
-            }));
-        }
 
         //đọc từng dòng của txt có đường dẫn là path
         public static IEnumerable<string> ReadLineText(string path)
         {
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
             using (var sr = new StreamReader(inFile))
             {
@@ -91,12 +89,16 @@ namespace Baitaplon
         public static void WriteFirstLine(string path, string writetex)
         {
             string tempfile = Path.GetTempFileName();
+            string templine;
             using (var writer = new StreamWriter(tempfile))
             using (var reader = new StreamReader(path))
             {
                 writer.WriteLine(writetex);
                 while (!reader.EndOfStream)
-                    writer.WriteLine(reader.ReadLine());
+                {
+                    templine = reader.ReadLine();
+                    if (!templine.Contains(writetex)) writer.WriteLine(templine);
+                }
             }
             File.Copy(tempfile, path, true);
         }
@@ -112,7 +114,7 @@ namespace Baitaplon
                 {
                     var line = sr.ReadLine();
                     if (String.IsNullOrEmpty(line)) continue;
-                    if (RemoveSign4VietnameseString(line).IndexOf(keyword,StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    if (RemoveSign4VietnameseString(line).IndexOf(keyword, StringComparison.CurrentCultureIgnoreCase) >= 0)
                     {
                         return line;
                     }
@@ -120,6 +122,7 @@ namespace Baitaplon
             }
             return null;
         }
+
         private static readonly string[] VietnameseSigns = new string[]{
 
         "aAeEoOuUiIdDyY",

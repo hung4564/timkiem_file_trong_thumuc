@@ -14,87 +14,100 @@ namespace Baitaplon
 {
     public partial class fTimkiemInTxt : Form
     {
-        string timkiem
+        Queue<string> queue_result = new Queue<string>();
+        private const int ItemHeight = 50;
+        bool done=false;
+        string keyword
         {
             get { return txtSearch.Text; }
         }
+        Thread ts;
         public fTimkiemInTxt()
         {
             InitializeComponent();
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
-            backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
-            backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-            XWord.backgroundWorker1 = backgroundWorker1;
-            XWord.lblProgress = lblProgress;
-            XWord.list = listBox_timkiem;
-            XWord.progressBar1 = progressBar1;
-            XTxt.list = listBox_timkiem;
-            XTxt.lblProgress = lblProgress;
-            XTxt.backgroundWorker1 = backgroundWorker1;
-            XTxt.progressBar1 = progressBar1;
-            // comboBox2.DataSource = XDriveInfo.LoadDrive();
+            XTxt.queue_result = queue_result;
+            XTxt.Timkiem += SearchFile_done;
+            XTxt.Done += Search_done;
+            XWord.Timkiem += SearchFile_done;
+            XWord.Done += Search_done;
+        }        
+
+        private void Search_done(object sender, EventArgs e)
+        {
+            done = true;
         }
+
+        private void SearchFile_done(object sender, EventArgs e)
+        {
+            lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm trong file txt"));
+            if (backgroundWorker1.IsBusy) backgroundWorker1.ReportProgress(40);
+        }
+
+        void AddFileToListBox(string path)
+        {
+            //string lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
+            //XTextInfo listitem = new XTextInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path, lineresult);
+
+            listBox_timkiem.Invoke((Action)(() =>
+            {
+                listBox_timkiem.BeginUpdate();
+                listBox_timkiem.Items.Add(path);
+                listBox_timkiem.EndUpdate();
+            }));
+        }
+
+        void RunSearch()
+        {
+            if (rd_TXT.Checked)
+            {
+                XTxt.SearchALL(txtFolderPath.Text, txtSearch.Text);
+            }
+            else if (rd_word.Checked) XWord.SearchALL(txtFolderPath.Text, txtSearch.Text);
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
+            ts = new Thread(RunSearch);
             if (backgroundWorker1.IsBusy)
             {
+                done = false;
+                ts.Abort();
                 backgroundWorker1.CancelAsync();
             }
             else
             {
+                done = false;
                 progressBar1.Value = progressBar1.Minimum;
                 btnSearch.Text = "Stop";
-                XTxt.WriteFirstLine(XPath.pathfile_history_name,timkiem);
+                XTxt.WriteFirstLine(XPath.pathfile_history_name, keyword);
                 listBox_timkiem.Items.Clear();
+                lblProgress.Text = "Đang tìm kiếm file .txt";
+                ts.IsBackground = true;
+                ts.Start();
                 backgroundWorker1.RunWorkerAsync();
             }
         }
 
-        // Indicate the amount of space needed for a ListBox item.
-        private const int ItemHeight = 50;
-        private void listBox_timkiem_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
-            e.ItemHeight = ItemHeight;
-        }
-        // Draw a ListBox item.
-        private void listBox_timkiem_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            if (e.Index >= 0)
-            {
-                ListBox listBox = sender as ListBox;
-                if (rd_TXT.Checked == true)
-                {
-
-                    XTextInfo fileInfo = listBox.Items[e.Index] as XTextInfo;
-
-                    // Draw the background.
-                    e.DrawBackground();
-
-                    fileInfo.DrawItem(e.Graphics, e.Bounds, this.Font, false);
-                }
-                else if (rd_word.Checked == true)
-                {
-                    XInfo fileInfo = listBox.Items[e.Index] as XInfo;
-
-                    // Draw the background.
-                    e.DrawBackground();
-
-                    fileInfo.DrawItem(e.Graphics, e.Bounds, this.Font, false);
-                }
-            }
-        }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (rd_TXT.Checked == true)
+            for (int i = 40; i < progressBar1.Maximum; i++)
             {
-                XTxt.SearchALL(txtFolderPath.Text, txtSearch.Text);
+                if (backgroundWorker1.CancellationPending)
+                {
+                    break;
+                }
+                if (queue_result.Count > 0) AddFileToListBox(queue_result.Dequeue());
+                else if(done)
+                {                    
+                    backgroundWorker1.ReportProgress(100);
+                    break;
+                }
+                backgroundWorker1.ReportProgress(i);
+                System.Threading.Thread.Sleep(1000);
             }
-            else if (rd_word.Checked == true) XWord.SearchALL(txtFolderPath.Text, txtSearch.Text);
-            backgroundWorker1.ReportProgress(100);
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -108,13 +121,13 @@ namespace Baitaplon
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
+            queue_result.Clear();
             lblProgress.Text = String.Format("{0} files found", listBox_timkiem.Items.Count);
             if (progressBar1.Value < progressBar1.Maximum)
             {
                 lblProgress.Text = "Searching cancelled. " + lblProgress.Text;
             }
-            btnSearch.Text = "Search";
+            btnSearch.Text = "Tìm kiếm";
         }
 
         private void btn_location_Click(object sender, EventArgs e)
@@ -136,10 +149,50 @@ namespace Baitaplon
             Loaifile a = rd_word.Checked ? Loaifile.Word : Loaifile.Txt;
             if (list.SelectedItem != null)
             {
-                XTxt.WriteFirstLine(XPath.pathfile_history_file,list.SelectedItem.ToString());
-                fOpenText f = new fOpenText(list.SelectedItem.ToString(),timkiem, a);
+                XTxt.WriteFirstLine(XPath.pathfile_history_file, list.SelectedItem.ToString());
+                fOpenText f = new fOpenText(list.SelectedItem.ToString(), keyword, a);
                 f.Show();
             }
+        }
+
+        private void listBox_timkiem_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            e.ItemHeight = ItemHeight;
+        }
+
+        private void listBox_timkiem_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index >= 0)
+            {
+                ListBox listBox = sender as ListBox;
+
+                string path = listBox.Items[e.Index] as string;
+                if (rd_TXT.Checked)
+                {
+                    string lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
+                    XTextInfo fileInfo = new XTextInfo(path, lineresult);
+
+                    // Draw the background.
+                    e.DrawBackground();
+
+                    fileInfo.DrawItem(e.Graphics, e.Bounds, this.Font, false);
+                }
+                else if (rd_word.Checked)
+                {
+                    XInfo fileInfo = new XInfo(path);
+
+                    // Draw the background.
+                    e.DrawBackground();
+
+                    fileInfo.DrawItem(e.Graphics, e.Bounds, this.Font, false);
+                }
+            }
+        }
+
+        private void rd_TXT_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rd_TXT.Checked) XTxt.queue_result = queue_result;
+            else XWord.queue_result = queue_result;
         }
     }
 }
