@@ -11,13 +11,16 @@ namespace Baitaplon
     class XTxt
     {
         #region Thuộc tính
-        public static Queue<string> queue_result;
+        //Hàng đợi lưu đường dẫn chứa kết quả tìm thấy
+        public static Queue<string> queue_result; 
+        //thông báo là đã tìm kiếm file đuôi xong
         private static event EventHandler timkiem;
         public static event EventHandler Timkiem
         {
             add { timkiem += value; }
             remove { timkiem -= value; }
         }
+        //thông bao là tìm kiếm trong file xong
         private static event EventHandler done;
         public static event EventHandler Done
         {

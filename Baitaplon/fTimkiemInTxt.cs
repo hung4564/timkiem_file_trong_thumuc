@@ -44,20 +44,7 @@ namespace Baitaplon
         {
             lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm trong file txt"));
             if (backgroundWorker1.IsBusy) backgroundWorker1.ReportProgress(40);
-        }
-
-        void AddFileToListBox(string path)
-        {
-            //string lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
-            //XTextInfo listitem = new XTextInfo(XImage.LoadImagebyExt(path), XPath.GetFileNameWithoutExtension(path), path, lineresult);
-
-            listBox_timkiem.Invoke((Action)(() =>
-            {
-                listBox_timkiem.BeginUpdate();
-                listBox_timkiem.Items.Add(path);
-                listBox_timkiem.EndUpdate();
-            }));
-        }
+        }        
 
         void RunSearch()
         {
@@ -99,7 +86,15 @@ namespace Baitaplon
                 {
                     break;
                 }
-                if (queue_result.Count > 0) AddFileToListBox(queue_result.Dequeue());
+                if (queue_result.Count > 0)
+                {
+                    listBox_timkiem.Invoke((Action)(() =>
+                    {
+                        listBox_timkiem.BeginUpdate();
+                        listBox_timkiem.Items.Add(queue_result.Dequeue());
+                        listBox_timkiem.EndUpdate();
+                    }));
+                }
                 else if(done)
                 {                    
                     backgroundWorker1.ReportProgress(100);

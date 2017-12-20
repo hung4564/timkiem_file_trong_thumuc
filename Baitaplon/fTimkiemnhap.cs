@@ -11,8 +11,8 @@ namespace Baitaplon
     {
         XFilter filter;
         Queue<string> queue_result = new Queue<string>();
-        // Indicate the amount of space needed for a ListBox item.
         private const int ItemHeight = 50;
+
         public fTimkiemnhap()
         {
             filter = new XFilter();

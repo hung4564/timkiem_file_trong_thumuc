@@ -12,7 +12,9 @@ namespace Baitaplon
     static class XFolder
     {
         #region Thuộc tính
+        //Chưa thông tin cần lọc
         static XFilter boloc;
+        //Hàng đợi lưu đường dẫn chứa kết quả tìm thấy
         public static Queue<string> queue_result;
         #endregion
         #region Phương thức
@@ -127,6 +129,7 @@ namespace Baitaplon
             return listFolder;
         }
 
+
         public static void GetAll_DFS(string root, string search,XFilter loc)
         {
             boloc = loc;
@@ -144,7 +147,7 @@ namespace Baitaplon
             }
         }
 
-        //Trả về danh sách path thỏa mãn vào listbox chứa 1 chuỗi
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
         public static void GetAll_DFS(string root, string search)//tìm kiếm theo chiều sâu
         {
             Stack<string> pending = new Stack<string>();
@@ -184,7 +187,7 @@ namespace Baitaplon
             }
         }
 
-        //Trả về danh sách path thỏa mãn vào listbox chứa 1 từ trong số các từ tìm kiếm
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
         public static void GetAll_DFS(string root, string[] keyword)//tìm kiếm theo chiều sâu
         {
             int i = 0;

@@ -14,13 +14,18 @@ namespace Baitaplon
     }
     public class XFilter
     {
+        //Chứa tên đuôi cần lọc
         public string ext;
+        //Khoảng thời gian được tạo
         public DateTime? createTimeFrom;
         public DateTime? createTimeTo;
+        //Khoảng kích thước file
         public long lenghtMin;
         public long lenghtMax;
+        //là lọc theo từng tự hoặc lọc theo chuỗi
         public Loailoc loailoc;
 
+        //Tạo mặc định là chỉ lọc theo theo chuỗi
         public XFilter()
         {
             ext = null;
@@ -39,6 +44,7 @@ namespace Baitaplon
             this.lenghtMin = lenghtMin;
             this.loailoc = loailoc;
         }
+        //Kiểm tra xem path(đường dẫn) có thỏa mãn với bộ lọc có sẵn không
         public bool IsSatisfy(string path)
         {
             bool check = true;
