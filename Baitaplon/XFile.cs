@@ -117,8 +117,7 @@ namespace Baitaplon
                 string rootpath = XPath.DirRoot_Info(path);
                 string ext = XPath.GetExtention(path);
                 string newpath = rootpath + "\\" + newname + ext;
-                Copy(path, newpath);
-                Delete(path);
+                Move(path, newpath);
             }
         }
 
@@ -259,6 +258,36 @@ namespace Baitaplon
                     }
             }
         }
-    }
+        public static IEnumerable<string> GetFilebyExt_BFS(string root, string[] ext)//tìm kiếm theo chiều sâu
+        {
+            //load danh sách theo chiêu sâu
+            Queue<string> pending = new Queue<string>();
+            pending.Enqueue(root);
+            while (pending.Count != 0)
+            {
+                var path = pending.Dequeue();
+                string[] next = null;
+                try
+                {
+                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stack
+                }
+                catch { }
+                try
+                {
+                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                }
+                catch { }
+                if (next != null)
+                    foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
+                    {
+                        if (XPath.IsEqualExt(item, ext))
+                        {
+                            yield return item;
+                        }
+                    }
+            }
+        }
 
+    }
 }
