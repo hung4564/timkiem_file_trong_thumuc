@@ -135,49 +135,6 @@ namespace Baitaplon
         }
 
         #endregion
-        // thao tác tương ưng khi kích vào node trong treeview
-        public static void ClickFile(string dirnode, TreeView treeView)
-        {
-            DirectoryInfo info = new DirectoryInfo(dirnode);
-            switch (info.Attributes)
-            {
-                case FileAttributes.ReadOnly:
-                    break;
-                case FileAttributes.Hidden:
-                    break;
-                case FileAttributes.System:
-                    break;
-                case FileAttributes.Directory:
-                    XFile.LoadFileandFolded(dirnode, treeView);
-                    break;
-                case FileAttributes.Archive:
-                    break;
-                case FileAttributes.Device:
-                    break;
-                case FileAttributes.Normal:
-                    break;
-                case FileAttributes.Temporary:
-                    break;
-                case FileAttributes.SparseFile:
-                    break;
-                case FileAttributes.ReparsePoint:
-                    break;
-                case FileAttributes.Compressed:
-                    break;
-                case FileAttributes.Offline:
-                    break;
-                case FileAttributes.NotContentIndexed:
-                    break;
-                case FileAttributes.Encrypted:
-                    break;
-                case FileAttributes.IntegrityStream:
-                    break;
-                case FileAttributes.NoScrubData:
-                    break;
-                default:
-                    break;
-            }
-        }
 
         //trả về danh sách file trong thư mục có đường dẫn dirRoot vào List<treenode>
         public static List<TreeNode> LoadFile(string dirRoot)

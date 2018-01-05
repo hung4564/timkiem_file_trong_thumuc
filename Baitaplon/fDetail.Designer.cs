@@ -75,6 +75,7 @@
             // 
             this.txt_lastaccess.Location = new System.Drawing.Point(173, 133);
             this.txt_lastaccess.Name = "txt_lastaccess";
+            this.txt_lastaccess.ReadOnly = true;
             this.txt_lastaccess.Size = new System.Drawing.Size(227, 22);
             this.txt_lastaccess.TabIndex = 9;
             // 
@@ -82,6 +83,7 @@
             // 
             this.txt_createtime.Location = new System.Drawing.Point(173, 105);
             this.txt_createtime.Name = "txt_createtime";
+            this.txt_createtime.ReadOnly = true;
             this.txt_createtime.Size = new System.Drawing.Size(227, 22);
             this.txt_createtime.TabIndex = 8;
             // 
@@ -89,6 +91,7 @@
             // 
             this.txt_ext.Location = new System.Drawing.Point(173, 74);
             this.txt_ext.Name = "txt_ext";
+            this.txt_ext.ReadOnly = true;
             this.txt_ext.Size = new System.Drawing.Size(227, 22);
             this.txt_ext.TabIndex = 7;
             // 
@@ -96,6 +99,7 @@
             // 
             this.txt_lengh.Location = new System.Drawing.Point(173, 46);
             this.txt_lengh.Name = "txt_lengh";
+            this.txt_lengh.ReadOnly = true;
             this.txt_lengh.Size = new System.Drawing.Size(227, 22);
             this.txt_lengh.TabIndex = 6;
             // 
@@ -103,6 +107,7 @@
             // 
             this.txt_name.Location = new System.Drawing.Point(173, 20);
             this.txt_name.Name = "txt_name";
+            this.txt_name.ReadOnly = true;
             this.txt_name.Size = new System.Drawing.Size(227, 22);
             this.txt_name.TabIndex = 5;
             // 

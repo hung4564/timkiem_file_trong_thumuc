@@ -114,10 +114,18 @@ namespace Baitaplon
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            GetBack(dirCurrent);
             string dirnode = e.Node.Tag.ToString();
-            XFile.ClickFile(dirnode, treeView2);
-            txt_current.Text = dirCurrent;
+            if (File.GetAttributes(dirnode) == FileAttributes.Directory)
+            {
+                GetBack(dirCurrent);
+                XFile.LoadFileandFolded(dirnode, treeView2);
+                txt_current.Text = dirCurrent;
+            }
+            else
+            {
+                fDetail f = new fDetail(dirnode);
+                f.ShowDialog();
+            }
         }
 
         private void btn_Reset_Click(object sender, EventArgs e)
@@ -143,6 +151,6 @@ namespace Baitaplon
             txt_current.Text = dirCurrent;
         }
         #endregion
-        
+
     }
 }
