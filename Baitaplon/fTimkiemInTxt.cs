@@ -28,7 +28,6 @@ namespace Baitaplon
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
-            XTxt.queue_result = queue_result;
             XTxt.Timkiem += SearchFile_done;
             XTxt.Done += Search_done;
             XWord.Timkiem += SearchFile_done;
@@ -50,9 +49,9 @@ namespace Baitaplon
         {
             if (rd_TXT.Checked)
             {
-                XTxt.SearchALL(txtFolderPath.Text, txtSearch.Text);
+                XTxt.SearchALL(txtFolderPath.Text, txtSearch.Text,queue_result);
             }
-            else if (rd_word.Checked) XWord.SearchALL(txtFolderPath.Text, txtSearch.Text);
+            else if (rd_word.Checked) XWord.SearchALL(txtFolderPath.Text, txtSearch.Text,queue_result);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -71,7 +70,7 @@ namespace Baitaplon
                 btnSearch.Text = "Stop";
                 XTxt.WriteFirstLine(XPath.pathfile_history_name, keyword);
                 listBox_timkiem.Items.Clear();
-                lblProgress.Text = "Đang tìm kiếm file .txt";
+                lblProgress.Text = "Đang tìm kiếm file";
                 ts.IsBackground = true;
                 ts.Start();
                 backgroundWorker1.RunWorkerAsync();
@@ -183,11 +182,6 @@ namespace Baitaplon
                 }
             }
         }
-
-        private void rd_TXT_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rd_TXT.Checked) XTxt.queue_result = queue_result;
-            else XWord.queue_result = queue_result;
-        }
+        
     }
 }

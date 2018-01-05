@@ -113,7 +113,7 @@ namespace Baitaplon
         //trả về danh sách folder trong thư mục có đường dirRoot vào treenode
         public static List<TreeNode> LoadFolder(string dirRoot)
         {
-            string[] dirs = Directory.GetDirectories(dirRoot);
+            string[] dirs = XFolder.GetDirectories(dirRoot).ToArray();
             List<TreeNode> listFolder = new List<TreeNode>();
             int index;
             foreach (string dir in dirs)
@@ -148,7 +148,24 @@ namespace Baitaplon
             }
             return listFolder;
         }
-
+        public static IEnumerable<string> GetFiles(string path)
+        {
+            List<string> result;
+            result = Directory.GetFiles(path).ToList();
+            foreach (string item in result)
+            {
+                if (!item.Contains("$")) yield return item;
+            }
+        }
+        public static IEnumerable<string> GetDirectories(string path)
+        {
+            List<string> result;
+            result = Directory.GetDirectories(path).ToList();
+            foreach (string item in result)
+            {
+                if (!item.Contains("$")) yield return item;
+            }
+        }
 
         public static void GetAll_DFS(string root, string search,XFilter loc)
         {
@@ -178,7 +195,7 @@ namespace Baitaplon
                 string[] next = null;
                 try
                 {
-                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
                     foreach (var subdir in next) pending.Push(subdir);  //cho vào trong stack
                 }
                 catch { }
@@ -192,7 +209,7 @@ namespace Baitaplon
                     }
                 try
                 {
-                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                    next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
                 }
                 catch { }
                 if (next != null)
@@ -221,7 +238,7 @@ namespace Baitaplon
                 i++;
                 try
                 {
-                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
                     foreach (var subdir in next) pending.Push(subdir);  //cho vào trong stack
                     if (next != null) all += next.Count();
                 }
@@ -237,7 +254,7 @@ namespace Baitaplon
                     }
                 try
                 {
-                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                    next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
                 }
                 catch { }
                 if (next != null)
@@ -280,7 +297,7 @@ namespace Baitaplon
                 string[] next = null;
                 try
                 {
-                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
                     foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stack
                 }
                 catch { }
@@ -294,7 +311,7 @@ namespace Baitaplon
                     }
                 try
                 {
-                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                    next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
                 }
                 catch { }
                 if (next != null)
@@ -323,7 +340,7 @@ namespace Baitaplon
                 i++;
                 try
                 {
-                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
                     foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stack
                     if (next != null) all += next.Count();
                 }
@@ -339,7 +356,7 @@ namespace Baitaplon
                     }
                 try
                 {
-                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                    next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
                 }
                 catch { }
                 if (next != null)

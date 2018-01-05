@@ -40,16 +40,16 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.gb_lenght = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.nud_max = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.nud_min = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.rb_cachuoi = new System.Windows.Forms.RadioButton();
             this.rb_tungtu = new System.Windows.Forms.RadioButton();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.rb_cachuoi = new System.Windows.Forms.RadioButton();
             this.gb_ext = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.gb_date.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.gb_lenght.SuspendLayout();
@@ -179,6 +179,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Loại lọc";
             // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(20, 80);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(136, 20);
+            this.checkBox3.TabIndex = 12;
+            this.checkBox3.Text = "Theo kích thước";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // gb_lenght
             // 
             this.gb_lenght.Controls.Add(this.label3);
@@ -193,6 +204,16 @@
             this.gb_lenght.TabStop = false;
             this.gb_lenght.Text = "Kích thước";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label3.Location = new System.Drawing.Point(16, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 16);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Đến";
+            // 
             // nud_max
             // 
             this.nud_max.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -200,6 +221,16 @@
             this.nud_max.Name = "nud_max";
             this.nud_max.Size = new System.Drawing.Size(200, 22);
             this.nud_max.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label4.Location = new System.Drawing.Point(17, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 16);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Từ";
             // 
             // nud_min
             // 
@@ -221,6 +252,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Kiểu lọc";
             // 
+            // rb_tungtu
+            // 
+            this.rb_tungtu.AutoSize = true;
+            this.rb_tungtu.Location = new System.Drawing.Point(13, 66);
+            this.rb_tungtu.Name = "rb_tungtu";
+            this.rb_tungtu.Size = new System.Drawing.Size(77, 20);
+            this.rb_tungtu.TabIndex = 1;
+            this.rb_tungtu.Text = "Từng từ";
+            this.rb_tungtu.UseVisualStyleBackColor = true;
+            // 
             // rb_cachuoi
             // 
             this.rb_cachuoi.AutoSize = true;
@@ -233,27 +274,6 @@
             this.rb_cachuoi.Text = "Cả chuỗi";
             this.rb_cachuoi.UseVisualStyleBackColor = true;
             // 
-            // rb_tungtu
-            // 
-            this.rb_tungtu.AutoSize = true;
-            this.rb_tungtu.Location = new System.Drawing.Point(13, 66);
-            this.rb_tungtu.Name = "rb_tungtu";
-            this.rb_tungtu.Size = new System.Drawing.Size(77, 20);
-            this.rb_tungtu.TabIndex = 1;
-            this.rb_tungtu.Text = "Từng từ";
-            this.rb_tungtu.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(20, 80);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(136, 20);
-            this.checkBox3.TabIndex = 12;
-            this.checkBox3.Text = "Theo kích thước";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
             // gb_ext
             // 
             this.gb_ext.Controls.Add(this.cb_ext);
@@ -265,26 +285,6 @@
             this.gb_ext.TabIndex = 10;
             this.gb_ext.TabStop = false;
             this.gb_ext.Text = "Đuôi mở rộng";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label3.Location = new System.Drawing.Point(16, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 16);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Đến";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label4.Location = new System.Drawing.Point(17, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 16);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Từ";
             // 
             // fBoloc
             // 

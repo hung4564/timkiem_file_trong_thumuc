@@ -93,7 +93,7 @@ namespace Baitaplon
         public static Image LoadImagebyExt(string path)
         {
             //lấy ra đuôi của đường dẫn
-            if (File.GetAttributes(path) == FileAttributes.Directory) return Properties.Resources.folder;
+            if (System.IO.File.GetAttributes(path).HasFlag(System.IO.FileAttributes.Directory)) return Properties.Resources.folder;
             string ext = XPath.GetExtention(path);
             switch (ext)
             {

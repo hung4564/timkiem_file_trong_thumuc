@@ -11,8 +11,6 @@ namespace Baitaplon
     class XTxt
     {
         #region Thuộc tính
-        //Hàng đợi lưu đường dẫn chứa kết quả tìm thấy
-        public static Queue<string> queue_result; 
         //thông báo là đã tìm kiếm file đuôi xong
         private static event EventHandler timkiem;
         public static event EventHandler Timkiem
@@ -31,7 +29,7 @@ namespace Baitaplon
         #region Phương thức
 
         //Tím kiếm từ trong tất cả các file ở thư mục root chưa key word
-        public static void SearchALL(string root, string keyword)
+        public static void SearchALL(string root, string keyword, Queue<string> queue_result)
         {
             List<string> path = XFile.GetFilebyExt_DFS(root, new string[] { ".txt" }).ToList();
             if (timkiem != null)
@@ -74,7 +72,7 @@ namespace Baitaplon
         {
             if (!File.Exists(path))
             {
-                File.Create(path);
+                using (File.Create(path)) { }
             }
             FileStream inFile = new FileStream(path, FileMode.Open, FileAccess.Read);
             using (var sr = new StreamReader(inFile))

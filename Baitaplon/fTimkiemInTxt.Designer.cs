@@ -182,7 +182,6 @@
             this.rd_TXT.TabStop = true;
             this.rd_TXT.Text = "TxT";
             this.rd_TXT.UseVisualStyleBackColor = true;
-            this.rd_TXT.CheckedChanged += new System.EventHandler(this.rd_TXT_CheckedChanged);
             // 
             // label4
             // 

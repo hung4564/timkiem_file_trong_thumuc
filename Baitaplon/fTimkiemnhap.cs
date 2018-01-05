@@ -12,7 +12,6 @@ namespace Baitaplon
         XFilter filter;
         Queue<string> queue_result = new Queue<string>();
         private const int ItemHeight = 50;
-
         public fTimkiemnhap()
         {
             filter = new XFilter();
@@ -25,7 +24,7 @@ namespace Baitaplon
 
         void RunSearch()
         {
-            XFolder.GetAll_DFS(txtFolderPath.Text, txtSearch.Text, filter);
+            XFolder.GetAll_BFS(txtFolderPath.Text, txtSearch.Text, filter);
         }
 
         void AddFileToListBox(string path)
@@ -43,13 +42,18 @@ namespace Baitaplon
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (int i  = 0; i  <progressBar1.Maximum; i ++)
+            for (int i = 0; i < progressBar1.Maximum; i++)
             {
-                if(bgW_loadfile.CancellationPending)
+                if (bgW_loadfile.CancellationPending)
                 {
                     break;
                 }
-                if (queue_result.Count > 0) AddFileToListBox(queue_result.Dequeue());
+                if (queue_result.Count > 0)
+                    while (queue_result.Count > 0)
+                    {
+                        AddFileToListBox(queue_result.Dequeue());
+                        System.Threading.Thread.Sleep(10);
+                    }
                 bgW_loadfile.ReportProgress(i);
                 System.Threading.Thread.Sleep(1000);
             }
@@ -129,6 +133,7 @@ namespace Baitaplon
             {
                 ts.Abort();
                 bgW_loadfile.CancelAsync();
+                progressBar1.Value = progressBar1.Maximum;
             }
             else
             {
@@ -147,6 +152,15 @@ namespace Baitaplon
         {
             fBoloc f = new fBoloc(filter);
             f.Show();
+        }
+
+        private void fTimkiemnhap_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (bgW_loadfile.IsBusy)
+            {
+                button2_Click(null, EventArgs.Empty);
+                System.Threading.Thread.Sleep(1000);
+            }
         }
     }
 }

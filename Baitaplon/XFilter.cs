@@ -37,7 +37,7 @@ namespace Baitaplon
         }
         public XFilter(string ext, DateTime? createTimeFrom, DateTime? createTimeTo, long lenghtMin, long lenghtMax, Loailoc loailoc)
         {
-            this.ext = ext;
+            this.ext = ext.Substring(ext.IndexOf('.'));
             this.createTimeFrom = createTimeFrom;
             this.createTimeTo = createTimeTo;
             this.lenghtMax = lenghtMax;
@@ -48,13 +48,14 @@ namespace Baitaplon
         public bool IsSatisfy(string path)
         {
             bool check = true;
-            if (this.ext != null) check = XPath.IsEqualExt(path, this.ext);
+            if (this.ext != null) if (XPath.IsEqualExt(path, this.ext)) check = true; else return false;
             if (this.createTimeFrom != null || this.lenghtMax!=0)
             {
                 System.IO.FileInfo temp = new System.IO.FileInfo(path);
                 if (this.createTimeFrom != null)
                     if (temp.CreationTime <= this.createTimeTo && temp.CreationTime >= this.createTimeFrom) check = true;
                     else return false;
+                if(!(System.IO.File.GetAttributes(path).HasFlag(System.IO.FileAttributes.Directory)))
                 if (this.lenghtMax != 0)
                     if (temp.Length <= this.lenghtMax && temp.Length >= this.lenghtMin) check = true;
                     else return false;

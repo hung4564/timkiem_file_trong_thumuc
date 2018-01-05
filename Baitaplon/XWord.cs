@@ -13,8 +13,6 @@ namespace Baitaplon
     class XWord
     {
         #region Thuộc tính
-        //Hàng đợi lưu đường dẫn chứa kết quả tìm thấy
-        public static Queue<string> queue_result;
         //thông báo là đã tìm kiếm file đuôi xong
         private static event EventHandler timkiem;
         public static event EventHandler Timkiem
@@ -74,7 +72,7 @@ namespace Baitaplon
         }
 
         // tìm kiếm từ trong tất cả file word có trong thư mục root chứ keyword vào hàng đợi
-        public static void SearchALL(string root, string keyword)
+        public static void SearchALL(string root, string keyword,Queue<string> queue_result)
         {
             List<string> path = XFile.GetFilebyExt_DFS(root, new string[] { ".doc", "docx" }).ToList();    //lấy toàn bộ file word;
             if (timkiem != null)

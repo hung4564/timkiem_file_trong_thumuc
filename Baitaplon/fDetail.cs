@@ -21,7 +21,7 @@ namespace Baitaplon
         }
         void load()
         {
-            if (System.IO.File.GetAttributes(path) == System.IO.FileAttributes.Directory)
+            if ((System.IO.File.GetAttributes(path).HasFlag(System.IO.FileAttributes.Directory)))
             {
                 System.IO.DirectoryInfo temp = new System.IO.DirectoryInfo(path);
                 txt_name.Text = temp.Name;

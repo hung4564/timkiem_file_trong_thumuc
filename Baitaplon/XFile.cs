@@ -185,7 +185,7 @@ namespace Baitaplon
             List<TreeNode> listFile = new List<TreeNode>();
             try
             {
-                string[] dirs = Directory.GetFiles(dirRoot);
+                string[] dirs = XFolder.GetFiles(dirRoot).ToArray();
                 foreach (string dir in dirs)
                 {
                     int index = XImage.listIndex[(int)IndexImage.File];
