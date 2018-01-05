@@ -33,10 +33,6 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.bt_boloc = new System.Windows.Forms.Button();
             this.listBox_timkiem = new System.Windows.Forms.ListBox();
@@ -46,7 +42,7 @@
             this.lblProgress = new System.Windows.Forms.Label();
             this.txtFolderPath = new System.Windows.Forms.TextBox();
             this.btn_location = new System.Windows.Forms.Button();
-            this.menuStrip1.SuspendLayout();
+            this.check_subfolder = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -62,7 +58,7 @@
             // 
             this.btnSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(355, 75);
+            this.btnSearch.Location = new System.Drawing.Point(424, 55);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(103, 26);
             this.btnSearch.TabIndex = 1;
@@ -72,10 +68,10 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(110, 46);
+            this.txtSearch.Location = new System.Drawing.Point(84, 59);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSearch.Size = new System.Drawing.Size(234, 20);
+            this.txtSearch.Size = new System.Drawing.Size(152, 20);
             this.txtSearch.TabIndex = 3;
             // 
             // progressBar1
@@ -86,41 +82,12 @@
             this.progressBar1.Size = new System.Drawing.Size(410, 23);
             this.progressBar1.TabIndex = 5;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.helpsToolStripMenuItem,
-            this.aboutUsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(486, 24);
-            this.menuStrip1.TabIndex = 7;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(12, 20);
-            // 
-            // helpsToolStripMenuItem
-            // 
-            this.helpsToolStripMenuItem.Name = "helpsToolStripMenuItem";
-            this.helpsToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.helpsToolStripMenuItem.Text = "Helps";
-            // 
-            // aboutUsToolStripMenuItem
-            // 
-            this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
-            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-            this.aboutUsToolStripMenuItem.Text = "About Us";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 86);
+            this.label2.Location = new System.Drawing.Point(7, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 15);
             this.label2.TabIndex = 9;
@@ -129,7 +96,7 @@
             // bt_boloc
             // 
             this.bt_boloc.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.bt_boloc.Location = new System.Drawing.Point(383, 46);
+            this.bt_boloc.Location = new System.Drawing.Point(424, 22);
             this.bt_boloc.Name = "bt_boloc";
             this.bt_boloc.Size = new System.Drawing.Size(75, 23);
             this.bt_boloc.TabIndex = 10;
@@ -154,7 +121,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(33, 46);
+            this.label3.Location = new System.Drawing.Point(7, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 15);
             this.label3.TabIndex = 15;
@@ -186,29 +153,42 @@
             // 
             // txtFolderPath
             // 
-            this.txtFolderPath.Location = new System.Drawing.Point(110, 81);
+            this.txtFolderPath.Location = new System.Drawing.Point(84, 22);
             this.txtFolderPath.Name = "txtFolderPath";
-            this.txtFolderPath.Size = new System.Drawing.Size(100, 20);
+            this.txtFolderPath.ReadOnly = true;
+            this.txtFolderPath.Size = new System.Drawing.Size(250, 20);
             this.txtFolderPath.TabIndex = 18;
             this.txtFolderPath.Text = "C:\\\\";
             // 
             // btn_location
             // 
-            this.btn_location.Location = new System.Drawing.Point(227, 79);
+            this.btn_location.Location = new System.Drawing.Point(348, 22);
             this.btn_location.Name = "btn_location";
-            this.btn_location.Size = new System.Drawing.Size(44, 23);
+            this.btn_location.Size = new System.Drawing.Size(27, 23);
             this.btn_location.TabIndex = 27;
             this.btn_location.Text = "...";
             this.btn_location.UseVisualStyleBackColor = true;
             this.btn_location.Click += new System.EventHandler(this.btn_location_Click);
             // 
+            // check_subfolder
+            // 
+            this.check_subfolder.AutoSize = true;
+            this.check_subfolder.Location = new System.Drawing.Point(251, 61);
+            this.check_subfolder.Name = "check_subfolder";
+            this.check_subfolder.Size = new System.Drawing.Size(147, 17);
+            this.check_subfolder.TabIndex = 28;
+            this.check_subfolder.Text = "Tìm cả trong thư mục con";
+            this.check_subfolder.UseVisualStyleBackColor = true;
+            // 
             // fTimkiemnhap
             // 
+            this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(486, 379);
+            this.ClientSize = new System.Drawing.Size(539, 379);
+            this.Controls.Add(this.check_subfolder);
             this.Controls.Add(this.btn_location);
             this.Controls.Add(this.txtFolderPath);
             this.Controls.Add(this.lblProgress);
@@ -221,14 +201,10 @@
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "fTimkiemnhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NhapTIMKIEM";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fTimkiemnhap_FormClosing);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,12 +216,8 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button bt_boloc;
-        private System.Windows.Forms.ToolStripMenuItem helpsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem;
         private System.Windows.Forms.ListBox listBox_timkiem;
         private System.Windows.Forms.Label label3;
         private System.ComponentModel.BackgroundWorker bgW_loadfile;
@@ -253,6 +225,7 @@
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.TextBox txtFolderPath;
         private System.Windows.Forms.Button btn_location;
+        private System.Windows.Forms.CheckBox check_subfolder;
     }
 }
 

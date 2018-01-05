@@ -71,6 +71,7 @@ namespace Baitaplon
             return read;
         }
 
+
         // tìm kiếm từ trong tất cả file word có trong thư mục root chứ keyword vào hàng đợi
         public static void SearchALL(string root, string keyword,Queue<string> queue_result)
         {

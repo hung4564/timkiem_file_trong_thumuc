@@ -44,13 +44,14 @@
             this.rd_TXT = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.txtFolderPath = new System.Windows.Forms.TextBox();
+            this.check_subfolder = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listBox_timkiem
             // 
             this.listBox_timkiem.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox_timkiem.FormattingEnabled = true;
-            this.listBox_timkiem.Location = new System.Drawing.Point(21, 77);
+            this.listBox_timkiem.Location = new System.Drawing.Point(12, 120);
             this.listBox_timkiem.Name = "listBox_timkiem";
             this.listBox_timkiem.Size = new System.Drawing.Size(433, 212);
             this.listBox_timkiem.TabIndex = 20;
@@ -70,7 +71,7 @@
             // progressBar1
             // 
             this.progressBar1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.progressBar1.Location = new System.Drawing.Point(21, 326);
+            this.progressBar1.Location = new System.Drawing.Point(21, 361);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(361, 23);
             this.progressBar1.TabIndex = 15;
@@ -135,7 +136,7 @@
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(18, 292);
+            this.lblProgress.Location = new System.Drawing.Point(18, 335);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(35, 13);
             this.lblProgress.TabIndex = 24;
@@ -144,7 +145,7 @@
             // lblPercent
             // 
             this.lblPercent.AutoSize = true;
-            this.lblPercent.Location = new System.Drawing.Point(400, 326);
+            this.lblPercent.Location = new System.Drawing.Point(394, 361);
             this.lblPercent.Name = "lblPercent";
             this.lblPercent.Size = new System.Drawing.Size(21, 13);
             this.lblPercent.TabIndex = 25;
@@ -152,7 +153,7 @@
             // 
             // btn_location
             // 
-            this.btn_location.Location = new System.Drawing.Point(236, 43);
+            this.btn_location.Location = new System.Drawing.Point(217, 45);
             this.btn_location.Name = "btn_location";
             this.btn_location.Size = new System.Drawing.Size(44, 23);
             this.btn_location.TabIndex = 26;
@@ -202,11 +203,22 @@
             this.txtFolderPath.TabIndex = 23;
             this.txtFolderPath.Text = "E:\\\\";
             // 
+            // check_subfolder
+            // 
+            this.check_subfolder.AutoSize = true;
+            this.check_subfolder.Location = new System.Drawing.Point(289, 78);
+            this.check_subfolder.Name = "check_subfolder";
+            this.check_subfolder.Size = new System.Drawing.Size(147, 17);
+            this.check_subfolder.TabIndex = 30;
+            this.check_subfolder.Text = "Tìm cả trong thư mục con";
+            this.check_subfolder.UseVisualStyleBackColor = true;
+            // 
             // fTimkiemInTxt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 361);
+            this.ClientSize = new System.Drawing.Size(484, 396);
+            this.Controls.Add(this.check_subfolder);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.rd_TXT);
             this.Controls.Add(this.rd_word);
@@ -225,6 +237,7 @@
             this.Name = "fTimkiemInTxt";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fTimkiemText";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fTimkiemInTxt_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -248,5 +261,6 @@
         private System.Windows.Forms.RadioButton rd_TXT;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtFolderPath;
+        private System.Windows.Forms.CheckBox check_subfolder;
     }
 }

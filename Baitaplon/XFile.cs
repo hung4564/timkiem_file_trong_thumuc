@@ -186,7 +186,7 @@ namespace Baitaplon
 
         //Trả về danh sách path chứa đuôi thỏa mãn các từ trong ext ở trong folder có đường dẫn là root
         public static IEnumerable<string> GetFilebyExt_DFS(string root, string[] ext)//tìm kiếm theo chiều sâu
-        {           
+        {
             //load danh sách theo chiêu sâu
             Stack<string> pending = new Stack<string>();
             pending.Push(root);
@@ -208,14 +208,14 @@ namespace Baitaplon
                 if (next != null)
                     foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
                     {
-                        if (XPath.IsEqualExt(item,ext))
+                        if (XPath.IsEqualExt(item, ext))
                         {
                             yield return item;
                         }
                     }
             }
         }
-        public static IEnumerable<string> GetFilebyExt_BFS(string root, string[] ext)//tìm kiếm theo chiều sâu
+        public static IEnumerable<string> GetFilebyExt_BFS(string root, string[] ext)//tìm kiếm theo chiều rộng
         {
             //load danh sách theo chiêu sâu
             Queue<string> pending = new Queue<string>();
@@ -246,5 +246,138 @@ namespace Baitaplon
             }
         }
 
+        public static void GetbyExt_DFS(Queue<string> queue_result, string root, string[] ext, bool IsSearchAllFolder)
+        {
+            if (IsSearchAllFolder)
+            {
+                GetAllFilebyExt_DFS(queue_result, root, ext);
+            }
+            else
+            {
+                GetFilebyExt_DFS(queue_result, root, ext);
+            }
+        }
+        public static void GetbyExt_BFS(Queue<string> queue_result, string root, string[] ext, bool IsSearchAllFolder)
+        {
+            if (IsSearchAllFolder)
+            {
+                GetAllFilebyExt_BFS(queue_result, root, ext);
+            }
+            else
+            {
+                GetFilebyExt_BFS(queue_result, root, ext);
+            }
+        }
+        //Trả kết quả về queus result
+        //Lấy kết quả trong tất cả folder con
+        public static void GetAllFilebyExt_DFS(Queue<string> queue_result, string root, string[] ext)//tìm kiếm theo chiều sâu
+        {
+            //load danh sách theo chiêu sâu
+            Stack<string> pending = new Stack<string>();
+            pending.Push(root);
+            while (pending.Count != 0)
+            {
+                var path = pending.Pop();
+                string[] next = null;
+                try
+                {
+                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    foreach (var subdir in next) pending.Push(subdir);  //cho vào trong stack
+                }
+                catch { }
+                try
+                {
+                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                }
+                catch { }
+                if (next != null)
+                    foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
+                    {
+                        if (XPath.IsEqualExt(item, ext))
+                        {
+                            queue_result.Enqueue(item);
+                        }
+                    }
+            }
+        }
+        public static void GetAllFilebyExt_BFS(Queue<string> queue_result, string root, string[] ext)//tìm kiếm theo chiều rộng
+        {
+            //load danh sách theo chiêu rộng
+
+            Queue<string> pending = new Queue<string>();
+            pending.Enqueue(root);
+            while (pending.Count != 0)
+            {
+                var path = pending.Dequeue();
+                string[] next = null;
+                try
+                {
+                    next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+                    foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stack
+                }
+                catch { }
+                try
+                {
+                    next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+                }
+                catch { }
+                if (next != null)
+                    foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
+                    {
+                        if (XPath.IsEqualExt(item, ext))
+                        {
+                            queue_result.Enqueue(item);
+                        }
+                    }
+            }
+        }
+        //Lấy kết quả trong 1 forder
+        public static void GetFilebyExt_DFS(Queue<string> queue_result, string root, string[] ext)//tìm kiếm theo chiều sâu
+        {
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            try
+            {
+                next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
+                {
+                    if (XPath.IsEqualExt(item, ext))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
+        public static void GetFilebyExt_BFS(Queue<string> queue_result, string root, string[] ext)//tìm kiếm theo chiều rộng
+        {
+
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = Directory.GetDirectories(path);              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            try
+            {
+                next = Directory.GetFiles(path);                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa đuôi cần tìm
+                {
+                    if (XPath.IsEqualExt(item, ext))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
     }
 }

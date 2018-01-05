@@ -36,16 +36,20 @@ namespace Baitaplon
                 timkiem(null, EventArgs.Empty);
             for (int i = 0; i < path.Count; i++)
             {
-                string lineresult = GetLineHaveKeyWord(path[i], keyword);
-                if (lineresult != null)
-                {
-                    queue_result.Enqueue(path[i]);
-                }
+                if(Search(path[i], keyword))queue_result.Enqueue(path[i]);
             }
             if (done != null)
                 done(null, EventArgs.Empty);
         }
-
+        public static bool  Search(string root, string keyword)
+        {
+            string lineresult = GetLineHaveKeyWord(root, keyword);
+            if (lineresult != null)
+            {
+                return true;
+            }
+            return false;
+        }
         //đọc file txt, có đường dẫn là path, tra về nội dung file
         public static string ReadText(string path)
         {

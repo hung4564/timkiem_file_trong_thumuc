@@ -18,13 +18,12 @@ namespace Baitaplon
             InitializeComponent();
             bgW_loadfile.WorkerReportsProgress = true;
             bgW_loadfile.WorkerSupportsCancellation = true;
-            XFolder.queue_result = queue_result;
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
         void RunSearch()
         {
-            XFolder.GetAll_BFS(txtFolderPath.Text, txtSearch.Text, filter);
+            XFolder.GetAll_BFS(queue_result,txtFolderPath.Text, txtSearch.Text, filter,check_subfolder.Checked);
         }
 
         void AddFileToListBox(string path)
@@ -42,8 +41,10 @@ namespace Baitaplon
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (int i = 0; i < progressBar1.Maximum; i++)
+            int n=0;
+            for (int i = 0; i <= progressBar1.Maximum; i++)
             {
+                n = 0;
                 if (bgW_loadfile.CancellationPending)
                 {
                     break;
@@ -52,7 +53,9 @@ namespace Baitaplon
                     while (queue_result.Count > 0)
                     {
                         AddFileToListBox(queue_result.Dequeue());
-                        System.Threading.Thread.Sleep(10);
+                        System.Threading.Thread.Sleep(1000);
+                        n++;
+                        if(i<50)if (n == 4) break;
                     }
                 bgW_loadfile.ReportProgress(i);
                 System.Threading.Thread.Sleep(1000);
@@ -151,7 +154,7 @@ namespace Baitaplon
         private void button3_Click(object sender, EventArgs e)
         {
             fBoloc f = new fBoloc(filter);
-            f.Show();
+            f.ShowDialog();
         }
 
         private void fTimkiemnhap_FormClosing(object sender, FormClosingEventArgs e)

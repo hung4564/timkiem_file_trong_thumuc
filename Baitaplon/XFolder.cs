@@ -14,8 +14,6 @@ namespace Baitaplon
         #region Thuộc tính
         //Chứa thông tin cần lọc
         static XFilter boloc;
-        //Hàng đợi lưu đường dẫn chứa kết quả tìm thấy
-        public static Queue<string> queue_result;
         #endregion
         #region Phương thức
         #region Xử lý
@@ -103,7 +101,7 @@ namespace Baitaplon
 
         public static void DeleteFolder(string sourceFolder)
         {
-            if(Directory.Exists(sourceFolder))
+            if (Directory.Exists(sourceFolder))
             {
                 Directory.Delete(sourceFolder, true);
             }
@@ -139,7 +137,7 @@ namespace Baitaplon
                 }
                 catch (Exception)
                 {
-                    
+
                 }
                 finally
                 {
@@ -167,25 +165,113 @@ namespace Baitaplon
             }
         }
 
-        public static void GetAll_DFS(string root, string search,XFilter loc)
+        #region Tìm kiếm chiều sâu
+
+        public static void GetAll_DFS(Queue<string> queue_result,string root, string search, XFilter loc, bool IsSearchAllFolder)
         {
-            boloc = loc;
-            switch (loc.loailoc)
+            if (IsSearchAllFolder)
             {
-                case Loailoc.Loctheotungtu:
-                    string[] keyword = search.Split(',');
-                    GetAll_DFS(root, keyword);
-                    break;
-                case Loailoc.Loctheochuoi:
-                    GetAll_DFS(root, search);
-                    break;
-                default:
-                    break;
+                boloc = loc;
+                switch (loc.loailoc)
+                {
+                    case Loailoc.Loctheotungtu:
+                        string[] keyword = search.Split(',');
+                        GetAll_DFS(queue_result, root, keyword);
+                        break;
+                    case Loailoc.Loctheochuoi:
+                        GetAll_DFS(queue_result, root, search);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                boloc = loc;
+                switch (loc.loailoc)
+                {
+                    case Loailoc.Loctheotungtu:
+                        string[] keyword = search.Split(',');
+                        GetOne_DFS(queue_result, root, keyword);
+                        break;
+                    case Loailoc.Loctheochuoi:
+                        GetOne_DFS(queue_result, root, search);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
-        public static void GetAll_DFS(string root, string search)//tìm kiếm theo chiều sâu
+        public static void GetOne_DFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều sâu
+        {
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+            try
+            {
+                next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
+
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
+        public static void GetOne_DFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều sâu
+        {
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
+                    {
+                        queue_result.Enqueue(item);
+
+                    }
+                }
+            try
+            {
+                next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
+
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
+        public static void GetAll_DFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều sâu
         {
             Stack<string> pending = new Stack<string>();
             pending.Push(root);
@@ -202,7 +288,7 @@ namespace Baitaplon
                 if (next != null)
                     foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
                     {
-                        if (boloc.IsSatisfy(item)&&XPath.IsEqualName(item, search))
+                        if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
                         {
                             queue_result.Enqueue(item);
                         }
@@ -225,22 +311,18 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetAll_DFS(string root, string[] keyword)//tìm kiếm theo chiều sâu
+        public static void GetAll_DFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều sâu
         {
-            int i = 0;
-            int all = 1;
             Stack<string> pending = new Stack<string>();
             pending.Push(root);
             while (pending.Count != 0)
             {
                 var path = pending.Pop();
                 string[] next = null;
-                i++;
                 try
                 {
                     next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
                     foreach (var subdir in next) pending.Push(subdir);  //cho vào trong stack
-                    if (next != null) all += next.Count();
                 }
                 catch { }
                 if (next != null)
@@ -269,25 +351,115 @@ namespace Baitaplon
             }
         }
 
-        public static void GetAll_BFS(string root, string search, XFilter loc)
+        #endregion
+
+        #region Tìm kiếm chiều rộng
+
+        public static void GetAll_BFS(Queue<string> queue_result, string root, string search, XFilter loc, bool IsSearchAllFolder)
         {
-            boloc = loc;
-            switch (loc.loailoc)
+            if (IsSearchAllFolder)
             {
-                case Loailoc.Loctheotungtu:
-                    string[] keyword = search.Split(',');
-                    GetAll_BFS(root, keyword);
-                    break;
-                case Loailoc.Loctheochuoi:
-                    GetAll_BFS(root, search);
-                    break;
-                default:
-                    break;
+                boloc = loc;
+                switch (loc.loailoc)
+                {
+                    case Loailoc.Loctheotungtu:
+                        string[] keyword = search.Split(',');
+                        GetAll_BFS(queue_result, root, keyword);
+                        break;
+                    case Loailoc.Loctheochuoi:
+                        GetAll_BFS(queue_result,root, search);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                boloc = loc;
+                switch (loc.loailoc)
+                {
+                    case Loailoc.Loctheotungtu:
+                        string[] keyword = search.Split(',');
+                        GetOne_BFS(queue_result, root, keyword);
+                        break;
+                    case Loailoc.Loctheochuoi:
+                        GetOne_BFS(queue_result, root, search);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
 
-        public static void GetAll_BFS(string root, string search)//tìm kiếm theo chiều rộng
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
+        public static void GetOne_BFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều rộng
+        {
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+            try
+            {
+                next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, search))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
+
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
+        public static void GetOne_BFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều rộng
+        {
+            var path = root;
+            string[] next = null;
+            try
+            {
+                next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các folder tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
+                    {
+                        queue_result.Enqueue(item);
+
+                    }
+                }
+            try
+            {
+                next = XFolder.GetFiles(path).ToArray();                    //lấy ra toàn bộ file trong folder đấy
+            }
+            catch { }
+            if (next != null)
+                foreach (string item in next)                       //kiếm tra trong các file tên có chứa chuối cần tìm
+                {
+                    if (boloc.IsSatisfy(item) && XPath.IsEqualName(item, keyword))
+                    {
+                        queue_result.Enqueue(item);
+                    }
+                }
+        }
+
+        //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
+        public static void GetAll_BFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều rộng
         {
             Queue<string> pending = new Queue<string>();
             pending.Enqueue(root);
@@ -325,24 +497,20 @@ namespace Baitaplon
 
             }
         }
-        
+
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetAll_BFS(string root, string[] keyword)//tìm kiếm theo chiều rộng
+        public static void GetAll_BFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều rộng
         {
-            int i = 0;
-            int all = 1;
             Queue<string> pending = new Queue<string>();
             pending.Enqueue(root);
             while (pending.Count != 0)
             {
                 var path = pending.Dequeue();
                 string[] next = null;
-                i++;
                 try
                 {
                     next = XFolder.GetDirectories(path).ToArray();              //lấy ra toàn bộ folder con
-                    foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stack
-                    if (next != null) all += next.Count();
+                    foreach (var subdir in next) pending.Enqueue(subdir);  //cho vào trong stackif (next != null) all += next.Count();
                 }
                 catch { }
                 if (next != null)
@@ -370,6 +538,8 @@ namespace Baitaplon
 
             }
         }
+
+        #endregion
 
         #endregion
     }
