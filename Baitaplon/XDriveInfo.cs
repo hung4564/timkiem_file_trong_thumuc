@@ -20,7 +20,7 @@ namespace Baitaplon
                 //Tạo node cho drive
                 DriveInfo di = new DriveInfo(drive);
                 TreeNode node = new TreeNode(drive.Substring(0, 1), index, index);
-                //tag của node lưu đường dẫn của file
+                //tag của node lưu đường dẫn của fileMO
                 node.Tag = drive;
                 if (di.IsReady == true)
                     node.Nodes.Add("...");

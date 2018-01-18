@@ -96,5 +96,11 @@ namespace Baitaplon
                 e.Cancel = true;
             }
         }
+
+        private void aboutusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fAboutus f = new fAboutus();
+            f.ShowDialog();
+        }
     }
 }

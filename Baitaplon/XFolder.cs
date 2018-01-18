@@ -13,7 +13,7 @@ namespace Baitaplon
     {
         #region Thuộc tính
         //Chứa thông tin cần lọc
-        static XFilter boloc;
+       // static XFilter boloc;
         #endregion
         #region Phương thức
         #region Xử lý
@@ -171,15 +171,15 @@ namespace Baitaplon
         {
             if (IsSearchAllFolder)
             {
-                boloc = loc;
+               // boloc = loc;
                 switch (loc.loailoc)
                 {
                     case Loailoc.Loctheotungtu:
                         string[] keyword = search.Split(',');
-                        GetAll_DFS(queue_result, root, keyword);
+                        GetAll_DFS(queue_result, root, keyword,loc);
                         break;
                     case Loailoc.Loctheochuoi:
-                        GetAll_DFS(queue_result, root, search);
+                        GetAll_DFS(queue_result, root, search,loc);
                         break;
                     default:
                         break;
@@ -187,15 +187,15 @@ namespace Baitaplon
             }
             else
             {
-                boloc = loc;
+                //boloc = loc;
                 switch (loc.loailoc)
                 {
                     case Loailoc.Loctheotungtu:
                         string[] keyword = search.Split(',');
-                        GetOne_DFS(queue_result, root, keyword);
+                        GetOne_DFS(queue_result, root, keyword, loc);
                         break;
                     case Loailoc.Loctheochuoi:
-                        GetOne_DFS(queue_result, root, search);
+                        GetOne_DFS(queue_result, root, search, loc);
                         break;
                     default:
                         break;
@@ -204,7 +204,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
-        public static void GetOne_DFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều sâu
+        public static void GetOne_DFS(Queue<string> queue_result, string root, string search, XFilter boloc)//tìm kiếm theo chiều sâu
         {
             var path = root;
             string[] next = null;
@@ -237,7 +237,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetOne_DFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều sâu
+        public static void GetOne_DFS(Queue<string> queue_result, string root, string[] keyword, XFilter boloc)//tìm kiếm theo chiều sâu
         {
             var path = root;
             string[] next = null;
@@ -271,7 +271,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
-        public static void GetAll_DFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều sâu
+        public static void GetAll_DFS(Queue<string> queue_result, string root, string search,XFilter boloc)//tìm kiếm theo chiều sâu
         {
             Stack<string> pending = new Stack<string>();
             pending.Push(root);
@@ -311,7 +311,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetAll_DFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều sâu
+        public static void GetAll_DFS(Queue<string> queue_result, string root, string[] keyword, XFilter boloc)//tìm kiếm theo chiều sâu
         {
             Stack<string> pending = new Stack<string>();
             pending.Push(root);
@@ -359,15 +359,15 @@ namespace Baitaplon
         {
             if (IsSearchAllFolder)
             {
-                boloc = loc;
+                //boloc = loc;
                 switch (loc.loailoc)
                 {
                     case Loailoc.Loctheotungtu:
                         string[] keyword = search.Split(',');
-                        GetAll_BFS(queue_result, root, keyword);
+                        GetAll_BFS(queue_result, root, keyword,loc);
                         break;
                     case Loailoc.Loctheochuoi:
-                        GetAll_BFS(queue_result,root, search);
+                        GetAll_BFS(queue_result,root, search,loc);
                         break;
                     default:
                         break;
@@ -375,15 +375,15 @@ namespace Baitaplon
             }
             else
             {
-                boloc = loc;
+                //boloc = loc;
                 switch (loc.loailoc)
                 {
                     case Loailoc.Loctheotungtu:
                         string[] keyword = search.Split(',');
-                        GetOne_BFS(queue_result, root, keyword);
+                        GetOne_BFS(queue_result, root, keyword,loc);
                         break;
                     case Loailoc.Loctheochuoi:
-                        GetOne_BFS(queue_result, root, search);
+                        GetOne_BFS(queue_result, root, search, loc);
                         break;
                     default:
                         break;
@@ -392,7 +392,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
-        public static void GetOne_BFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều rộng
+        public static void GetOne_BFS(Queue<string> queue_result, string root, string search, XFilter boloc)//tìm kiếm theo chiều rộng
         {
             var path = root;
             string[] next = null;
@@ -425,7 +425,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetOne_BFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều rộng
+        public static void GetOne_BFS(Queue<string> queue_result, string root, string[] keyword, XFilter boloc)//tìm kiếm theo chiều rộng
         {
             var path = root;
             string[] next = null;
@@ -459,7 +459,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 chuỗi
-        public static void GetAll_BFS(Queue<string> queue_result, string root, string search)//tìm kiếm theo chiều rộng
+        public static void GetAll_BFS(Queue<string> queue_result, string root, string search, XFilter boloc)//tìm kiếm theo chiều rộng
         {
             Queue<string> pending = new Queue<string>();
             pending.Enqueue(root);
@@ -499,7 +499,7 @@ namespace Baitaplon
         }
 
         //Trả về danh sách path thỏa mãn vào hàng đợi chứa 1 từ trong số các từ tìm kiếm
-        public static void GetAll_BFS(Queue<string> queue_result, string root, string[] keyword)//tìm kiếm theo chiều rộng
+        public static void GetAll_BFS(Queue<string> queue_result, string root, string[] keyword, XFilter boloc)//tìm kiếm theo chiều rộng
         {
             Queue<string> pending = new Queue<string>();
             pending.Enqueue(root);

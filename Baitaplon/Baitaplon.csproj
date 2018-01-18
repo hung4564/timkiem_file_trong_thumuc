@@ -70,17 +70,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="fAboutus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fAboutus.Designer.cs">
+      <DependentUpon>fAboutus.cs</DependentUpon>
+    </Compile>
     <Compile Include="fBoloc.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="fBoloc.Designer.cs">
       <DependentUpon>fBoloc.cs</DependentUpon>
     </Compile>
+    <Compile Include="fGetPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fGetPath.Designer.cs">
+      <DependentUpon>fGetPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="fOpenMusic.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>fOpenMusic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fOpenImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>fOpenImage.cs</DependentUpon>
     </Compile>
     <Compile Include="fThongbao.cs">
       <SubType>Form</SubType>
@@ -107,12 +125,6 @@
     </Compile>
     <Compile Include="XFilter.cs" />
     <Compile Include="XImage.cs" />
-    <Compile Include="fAboutus.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="fAboutus.Designer.cs">
-      <DependentUpon>fAboutus.cs</DependentUpon>
-    </Compile>
     <Compile Include="fDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,12 +136,6 @@
     </Compile>
     <Compile Include="fOpenText.Designer.cs">
       <DependentUpon>fOpenText.cs</DependentUpon>
-    </Compile>
-    <Compile Include="fOpenImage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="fOpenImage.Designer.cs">
-      <DependentUpon>fOpenImage.cs</DependentUpon>
     </Compile>
     <Compile Include="fTimkiemthucong.cs">
       <SubType>Form</SubType>
@@ -167,6 +173,9 @@
     <EmbeddedResource Include="fDetail.resx">
       <DependentUpon>fDetail.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fGetPath.resx">
+      <DependentUpon>fGetPath.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fMainform.resx">
       <DependentUpon>fMainform.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>fOpenMusic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>fOpenImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fThongbao.resx">
       <DependentUpon>fThongbao.cs</DependentUpon>
@@ -275,6 +287,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\infoTeam.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xám.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

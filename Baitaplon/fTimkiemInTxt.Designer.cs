@@ -82,7 +82,6 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(260, 20);
             this.txtSearch.TabIndex = 14;
-            this.txtSearch.Text = "pham";
             // 
             // btnSearch
             // 

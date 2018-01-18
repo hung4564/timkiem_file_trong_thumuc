@@ -16,28 +16,38 @@ namespace Baitaplon
         public fTimkiemthucong()
         {
             InitializeComponent();
+
+            LoadIco(listIcon);
+            treeView2.ImageList = listIcon;
+            XDriveInfo.LoadDrives(treeView1);
+            //txt_current.Text = dirCurrent;
+            if (treeView2.Tag != null)
+                txt_current.Text = treeView2.Tag.ToString();
         }
         #region Thuộc tính
-        private string dirCurrent
-        {
-            get
-            {
-                if (treeView2.Tag != null)
-                    return treeView2.Tag.ToString();
-                else return "";
-            }
-        }
+        //private string dirCurrent
+        //{
+        //    get
+        //    {
+        //        if (treeView2.Tag != null)
+        //            return treeView2.Tag.ToString();
+        //        else return "";
+        //    }
+        //}
         private Stack<string> dirBack = new Stack<string>();
         private Stack<string> dirForward = new Stack<string>();
         #endregion
         #region Phương thức
         void GetBack(string dir)
         {
-            if (dirCurrent != "")
+            //if (dirCurrent != "")
+            //{
+            //    dirBack.Push(dir);
+            //}
+            if (treeView2.Tag != null)
             {
                 dirBack.Push(dir);
             }
-
         }
         void LoadBack_tree(TreeView treeView)
         {
@@ -68,10 +78,6 @@ namespace Baitaplon
         #region Sự kiện
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadIco(listIcon);
-            treeView2.ImageList = listIcon;
-            XDriveInfo.LoadDrives(treeView1);
-            txt_current.Text = dirCurrent;
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -89,19 +95,20 @@ namespace Baitaplon
                     }
                 }
             }
-            txt_current.Text = dirCurrent;
+            txt_current.Text = treeView2.Tag.ToString();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            GetBack(dirCurrent);
+            if (treeView2.Tag != null)
+                GetBack(treeView2.Tag.ToString());
             dirForward.Clear();
             if (e.Node.Tag != null)
             {
                 treeView2.Nodes.Clear();
                 XFile.LoadFileandFolded(e.Node.Tag.ToString(), treeView2);
             }
-            txt_current.Text = dirCurrent;
+            txt_current.Text = treeView2.Tag.ToString();
         }
 
         private void treeView2_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -109,7 +116,8 @@ namespace Baitaplon
             string dirnode = e.Node.Tag.ToString();
             treeView2.Nodes.Clear();
             XFile.LoadFileandFolded(dirnode, treeView2);
-            txt_current.Text = dirCurrent;
+            if (treeView2.Tag != null)
+                txt_current.Text = treeView2.Tag.ToString();
         }
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -117,14 +125,16 @@ namespace Baitaplon
             string dirnode = e.Node.Tag.ToString();
             if (File.GetAttributes(dirnode) == FileAttributes.Directory)
             {
-                GetBack(dirCurrent);
+                if (treeView2.Tag != null)
+                    GetBack(treeView2.Tag.ToString());
                 XFile.LoadFileandFolded(dirnode, treeView2);
-                txt_current.Text = dirCurrent;
+                txt_current.Text = treeView2.Tag.ToString();
             }
             else
             {
                 fDetail f = new fDetail(dirnode);
                 f.ShowDialog();
+                XFile.LoadFileandFolded(treeView2.Tag.ToString(), treeView2);
             }
         }
 
@@ -136,19 +146,21 @@ namespace Baitaplon
         private void btn_Back_Click(object sender, EventArgs e)
         {
             if (dirBack.Count == 0) return;
-            dirForward.Push(dirCurrent);
+            dirForward.Push(treeView2.Tag.ToString());
             string dir = dirBack.Pop();
             XFile.LoadFileandFolded(dir, treeView2);
-            txt_current.Text = dirCurrent;
+            if (treeView2.Tag != null)
+                txt_current.Text = treeView2.Tag.ToString();
         }
 
         private void btn_Forward_Click(object sender, EventArgs e)
         {
             if (dirForward.Count == 0) return;
-            dirBack.Push(dirCurrent);
+            dirBack.Push(treeView2.Tag.ToString());
             string dir = dirForward.Pop();
             XFile.LoadFileandFolded(dir, treeView2);
-            txt_current.Text = dirCurrent;
+            if (treeView2.Tag != null)
+                txt_current.Text = treeView2.Tag.ToString();
         }
         #endregion
 

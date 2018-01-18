@@ -133,6 +133,16 @@ namespace Baitaplon.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap infoTeam {
+            get {
+                object obj = ResourceManager.GetObject("infoTeam", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap jpeg {
             get {
                 object obj = ResourceManager.GetObject("jpeg", resourceCulture);
@@ -166,6 +176,16 @@ namespace Baitaplon.Properties {
         internal static System.Drawing.Bitmap txt {
             get {
                 object obj = ResourceManager.GetObject("txt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap xám {
+            get {
+                object obj = ResourceManager.GetObject("xám", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

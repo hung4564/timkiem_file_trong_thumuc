@@ -16,21 +16,21 @@ namespace Baitaplon
             this.name = XPath.GetFileNameWithoutExtension(path);
             this.path = path;
             this.keyword = keyword;
-            this.lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
+           // this.lineresult = XTxt.GetLineHaveKeyWord(path, keyword);
         }
         public XTextInfo(Image Picture, string name, string path, string lineresult)
         {
             this.Picture = Picture;
             this.name = name;
             this.path = path;
-            this.lineresult = lineresult;
+            //this.lineresult = lineresult;
         }
         #endregion
         #region Thuộc tính
         public Image Picture;
         string name;
         string path;
-        string lineresult;
+        //string lineresult;
         string keyword;
         #endregion
         #region Phương thức
@@ -44,7 +44,8 @@ namespace Baitaplon
         // Dữ liệu để in
         public string TextData()
         {
-            return string.Format("{0}\nPath: {1}\nResult: {2}", name, path, lineresult);
+            //return string.Format("{0}\nPath: {1}\nResult: {2}", name, path, lineresult);
+            return string.Format("{0}\nPath: {1}", name, path);
         }
 
         // Draw the info's information in the rectangle.

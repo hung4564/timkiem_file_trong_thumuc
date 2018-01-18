@@ -19,6 +19,7 @@ namespace Baitaplon
             bgW_loadfile.WorkerReportsProgress = true;
             bgW_loadfile.WorkerSupportsCancellation = true;
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
+            txtSearch.Focus();
         }
 
         void RunSearch()
@@ -109,8 +110,20 @@ namespace Baitaplon
             if (list.SelectedItem != null)
             {
                 XTxt.WriteFirstLine(XPath.pathfile_history_file, list.SelectedItem.ToString());
-                fDetail f = new fDetail(list.SelectedItem.ToString());
-                f.Show();
+                string path = list.SelectedItem.ToString();
+                bool IsExists = false;
+                if (System.IO.File.GetAttributes(path).HasFlag(FileAttributes.Directory))
+                {
+                    IsExists = System.IO.Directory.Exists(path);
+                }
+                else IsExists = System.IO.File.Exists(path);
+                if (IsExists)
+                {
+                    fDetail f = new fDetail(path);
+                    f.Show();
+                }
+                else
+                    MessageBox.Show("File không tồn tại");
             }
         }
 

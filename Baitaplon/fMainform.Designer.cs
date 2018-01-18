@@ -29,52 +29,19 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMainform));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutUsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutUsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_findinfile = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.listBox_tu = new System.Windows.Forms.ListBox();
             this.listBox_file = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.aboutusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutUsToolStripMenuItem,
-            this.aboutUsToolStripMenuItem1,
-            this.aboutUsToolStripMenuItem2});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(484, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // aboutUsToolStripMenuItem
-            // 
-            this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
-            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.aboutUsToolStripMenuItem.Text = "Options";
-            // 
-            // aboutUsToolStripMenuItem1
-            // 
-            this.aboutUsToolStripMenuItem1.Name = "aboutUsToolStripMenuItem1";
-            this.aboutUsToolStripMenuItem1.Size = new System.Drawing.Size(49, 20);
-            this.aboutUsToolStripMenuItem1.Text = "Helps";
-            // 
-            // aboutUsToolStripMenuItem2
-            // 
-            this.aboutUsToolStripMenuItem2.Name = "aboutUsToolStripMenuItem2";
-            this.aboutUsToolStripMenuItem2.Size = new System.Drawing.Size(68, 20);
-            this.aboutUsToolStripMenuItem2.Text = "About Us";
             // 
             // button1
             // 
@@ -125,6 +92,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lịch sử tìm kiếm";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label2.Location = new System.Drawing.Point(333, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(101, 25);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Từ đã tìm";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label1.Location = new System.Drawing.Point(85, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "File đã mở";
+            // 
             // listBox_tu
             // 
             this.listBox_tu.FormattingEnabled = true;
@@ -140,26 +127,25 @@
             this.listBox_file.Name = "listBox_file";
             this.listBox_file.Size = new System.Drawing.Size(301, 186);
             this.listBox_file.TabIndex = 0;
+            this.listBox_file.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListBox_file_DrawItem);
+            this.listBox_file.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.ListBox_file_MeasureItem);
             // 
-            // label1
+            // menuStrip1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label1.Location = new System.Drawing.Point(85, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 25);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "File đã mở";
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutusToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(484, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // label2
+            // aboutusToolStripMenuItem
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label2.Location = new System.Drawing.Point(333, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 25);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Từ đã tìm";
+            this.aboutusToolStripMenuItem.Name = "aboutusToolStripMenuItem";
+            this.aboutusToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.aboutusToolStripMenuItem.Text = "aboutus";
+            this.aboutusToolStripMenuItem.Click += new System.EventHandler(this.aboutusToolStripMenuItem_Click);
             // 
             // fMainform
             // 
@@ -177,28 +163,25 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMainform_FormClosing);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_findinfile;
-        private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem aboutUsToolStripMenuItem2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox listBox_tu;
         private System.Windows.Forms.ListBox listBox_file;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem aboutusToolStripMenuItem;
     }
 }

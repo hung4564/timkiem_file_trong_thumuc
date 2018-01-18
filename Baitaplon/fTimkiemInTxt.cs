@@ -16,7 +16,6 @@ namespace Baitaplon
     {
         Queue<string> queue_result = new Queue<string>();
         private const int ItemHeight = 50;
-        bool done=false;
         string keyword
         {
             get { return txtSearch.Text; }
@@ -27,23 +26,10 @@ namespace Baitaplon
             InitializeComponent();
             listBox_timkiem.DrawMode = DrawMode.OwnerDrawVariable;
             backgroundWorker1.WorkerReportsProgress = true;
-            //backgroundWorker1.WorkerSupportsCancellation = true;
-            //XTxt.Timkiem += SearchFile_done;
-            //XTxt.Done += Search_done;
-            //XWord.Timkiem += SearchFile_done;
-            //XWord.Done += Search_done;
-        }        
+            backgroundWorker1.WorkerSupportsCancellation = true;
 
-        //private void Search_done(object sender, EventArgs e)
-        //{
-        //    done = true;
-        //}
-
-        //private void SearchFile_done(object sender, EventArgs e)
-        //{
-        //    lblProgress.Invoke((Action)(() => lblProgress.Text = "Đang tìm kiếm trong file txt"));
-        //    if (backgroundWorker1.IsBusy) backgroundWorker1.ReportProgress(40);
-        //}        
+            txtSearch.Focus();
+        }       
         void Runsearch()
         {
             string[] ext;
@@ -55,27 +41,17 @@ namespace Baitaplon
                  ext = new string[] { ".doc",".docx" };
             XFile.GetbyExt_BFS(queue_result, txtFolderPath.Text, ext,check_subfolder.Checked);
         }
-        void RunSearch_Needevent()
-        {
-            if (rd_TXT.Checked)
-            {
-                XTxt.SearchALL(txtFolderPath.Text, txtSearch.Text,queue_result);
-            }
-            else if (rd_word.Checked) XWord.SearchALL(txtFolderPath.Text, txtSearch.Text,queue_result);
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
             ts = new Thread(Runsearch);
             if (backgroundWorker1.IsBusy)
             {
-                done = false;
                 ts.Abort();
                 backgroundWorker1.CancelAsync();
             }
             else
             {
-                done = false;
                 progressBar1.Value = progressBar1.Minimum;
                 btnSearch.Text = "Stop";
                 XTxt.WriteFirstLine(XPath.pathfile_history_name, keyword);
@@ -91,6 +67,7 @@ namespace Baitaplon
             if (rd_TXT.Checked) return XTxt.Search(root, keyword);
             else return XWord.SearchInWord(root, keyword);
         }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             for (int i = 0; i <=progressBar1.Maximum; i++)
@@ -105,15 +82,11 @@ namespace Baitaplon
                     if (search(path,keyword))
                     AddFIleTOListbox(path);
                 }
-                else if(done)
-                {                    
-                    backgroundWorker1.ReportProgress(100);
-                    break;
-                }
                 backgroundWorker1.ReportProgress(i);
                 System.Threading.Thread.Sleep(1000);
             }
         }
+
         void AddFIleTOListbox(string item)
         {
             listBox_timkiem.Invoke((Action)(() =>

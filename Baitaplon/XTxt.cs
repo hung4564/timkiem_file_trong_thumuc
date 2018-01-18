@@ -10,37 +10,9 @@ namespace Baitaplon
 {
     class XTxt
     {
-        #region Thuộc tính
-        //thông báo là đã tìm kiếm file đuôi xong
-        private static event EventHandler timkiem;
-        public static event EventHandler Timkiem
-        {
-            add { timkiem += value; }
-            remove { timkiem -= value; }
-        }
-        //thông bao là tìm kiếm trong file xong
-        private static event EventHandler done;
-        public static event EventHandler Done
-        {
-            add { done += value; }
-            remove { done -= value; }
-        }
-        #endregion
         #region Phương thức
 
         //Tím kiếm từ trong tất cả các file ở thư mục root chưa key word
-        public static void SearchALL(string root, string keyword, Queue<string> queue_result)
-        {
-            List<string> path = XFile.GetFilebyExt_DFS(root, new string[] { ".txt" }).ToList();
-            if (timkiem != null)
-                timkiem(null, EventArgs.Empty);
-            for (int i = 0; i < path.Count; i++)
-            {
-                if(Search(path[i], keyword))queue_result.Enqueue(path[i]);
-            }
-            if (done != null)
-                done(null, EventArgs.Empty);
-        }
         public static bool  Search(string root, string keyword)
         {
             string lineresult = GetLineHaveKeyWord(root, keyword);

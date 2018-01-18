@@ -14,11 +14,15 @@ namespace Baitaplon
     {
         public fOpenMusic()
         {
-            InitializeComponent();
-            MediaPlayer.uiMode = "none";  // Ẩn thanh điều khiển của control MediaPlayer
+            //InitializeComponent();
+            //MediaPlayer.uiMode = "none";  // Ẩn thanh điều khiển của control MediaPlayer
             //MediaPlayer.settings.mute = true;   //Thanh âm lượng
         }
-
+        public fOpenMusic(string path)
+        {
+            //InitializeComponent();
+            //MediaPlayer.URL = path;
+        }
         private void fOpenMusic_Load(object sender, EventArgs e)
         {
 
@@ -34,8 +38,8 @@ namespace Baitaplon
             {
                 try
                 {
-                    MediaPlayer.URL = openfile.FileName;
-                    label1.Text = "Bạn đang nghe:" + XPath.GetFileNameWithoutExtension(openfile.FileName);
+                    //MediaPlayer.URL = openfile.FileName;
+                   // label1.Text = "Bạn đang nghe:" + XPath.GetFileNameWithoutExtension(openfile.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -46,26 +50,26 @@ namespace Baitaplon
 
         private void button1_Click(object sender, EventArgs e)  //Click Stop
         {
-            MediaPlayer.Ctlcontrols.stop();
+            //MediaPlayer.Ctlcontrols.stop();
         }
 
         private void button2_Click(object sender, EventArgs e)  //Click Start
         {
-            MediaPlayer.Ctlcontrols.play();
+            //MediaPlayer.Ctlcontrols.play();
         }
 
         private void button3_Click(object sender, EventArgs e)  //fullscreen
         {
-            if (MediaPlayer.URL.Length > 0)
+           // if (/MediaPlayer.URL.Length > 0)
             {
-                MediaPlayer.fullScreen = true;
+            //    MediaPlayer.fullScreen = true;
             }
 
         }
 
         private void MediaPlayer_Enter(object sender, EventArgs e)
         {
-            MediaPlayer.Ctlcontrols.pause();
+            //MediaPlayer.Ctlcontrols.pause();
         }
 
         private void button5_Click(object sender, EventArgs e)

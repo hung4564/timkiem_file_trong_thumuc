@@ -17,6 +17,17 @@ namespace Baitaplon
         {
             InitializeComponent();
         }
+        public fOpenText(string path,Loaifile loai)
+        {
+            InitializeComponent();
+            this.path = path;
+            if (loai == Loaifile.Txt)
+                richTextBox1.Text = XTxt.ReadText(path);
+            else if (loai == Loaifile.Word)
+            {
+                richTextBox1.Rtf = XWord.ReadWord(path);
+            }
+        }
         public fOpenText(string path, string tuboiden, Loaifile loai)
         {
             InitializeComponent();
